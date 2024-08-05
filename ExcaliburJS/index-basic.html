@@ -1,0 +1,83 @@
+<!doctype html>
+
+<!-- -------------------- -->
+<!-- Basic HTML structure -->
+<html>
+  <head>
+    <title>Excalibur JS</title>
+
+    <!-- ---------------- -->
+    <!-- Basic CSS styles -->
+    <style>
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="excaliburjs-game-canvas" class="snippet-resized" width="500" height="500"></canvas>
+
+    <!-- ------------------ -->
+    <!-- Basic JS scripting -->
+    <script type="module">
+      // ---------------------------------------
+      // Import from ExcaliburJS Library
+      import { Engine, Actor, Color, Loader, ImageSource, Vector } from 'https://esm.sh/excalibur@0.29.3';
+
+      // ---------------------------------------
+      // Load the sword
+      const imageSource = new ImageSource('https://excaliburjs.com/img/ex-logo.png');
+      const loader = new Loader([imageSource]);
+
+      // ---------------------------------------
+      // Create the game
+      const game = new Engine({
+        canvasElementId: 'excaliburjs-game-canvas',
+        suppressPlayButton: true,
+        width: 400,
+        height: 400,
+      });
+
+      // ---------------------------------------
+      // Create black square
+      const square = new Actor({
+        x: 200,
+        y: 200,
+        width: 100,
+        height: 100,
+        color: Color.White,
+      });
+      game.add(square);
+
+      // Update every frame
+      square.on('postupdate', (evt) => {
+        square.rotation += 0.0001 * evt.delta; // Adjust rotation speed as needed
+      });
+
+      // ---------------------------------------
+      // Create sword
+      const sword = new Actor({
+        x: 200,
+        y: 200,
+        width: 100,
+        height: 100,
+      });
+      sword.graphics.use(imageSource.toSprite());
+
+      game.add(sword);
+
+      // ---------------------------------------
+      // Tween sword
+      sword.actions.scaleBy(new Vector(-0.8, -0.8), 2);
+
+      // ---------------------------------------
+      // Start the game
+      game.start(loader);
+    </script>
+  </body>
+</html>

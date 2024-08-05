@@ -1,0 +1,77 @@
+import * as ex from 'excalibur';
+import { AsteroidsCollisionGroups } from '../../asteroids/settings/AsteroidsCollisionGroups';
+import { starterResourceCollection } from '../settings/StarterResourceCollection';
+import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
+
+/**
+ * Represents the player-controlled frog in the Frogger game.
+ */
+export class StarterPlayer extends ex.Actor {
+  // Properties -----------------------------------
+
+  // Fields ---------------------------------------
+  public readonly _moveSpeed = 3000;
+  private shadowVisible = true;
+  private _shadowTintCache!: ex.Color;
+  private _shadowTint = new ex.Color(0, 0, 0, 0.2);
+  private _shadowOffset = ex.vec(3, 3);
+  private _flipHorizontal = false;
+  // Initialization -------------------------------
+  constructor() {
+    super({
+      pos: ex.vec(150, 150),
+      width: 50,
+      height: 50,
+      collisionType: ex.CollisionType.Active,
+      collisionGroup: AsteroidsCollisionGroups.Player,
+    });
+  }
+
+  // Methods --------------------------------------
+  onInitialize() {
+    const sprite = starterResourceCollection.get<ex.ImageSource>('KnightStatic01').toSprite();
+
+    // Double the scale of the sprites
+    sprite.scale = ex.vec(2, 2);
+    this.graphics.use(sprite);
+    this.collider.set(
+      new ex.CircleCollider({
+        radius: Math.max(sprite.width, sprite.height) / 2,
+      }),
+    );
+
+    this.graphics.onPreDraw = (ctx: ex.ExcaliburGraphicsContext) => {
+      if (!this.shadowVisible || !this.graphics) {
+        return;
+      }
+
+      // set the shadow tint/opacity
+      this._shadowTintCache = ctx.tint;
+      ctx.tint = this._shadowTint;
+
+      // loop through all graphics and draw them with the shadow offset
+      for (const g of Object.values(this.graphics.graphics)) {
+        g.draw(ctx, -g.width * this.anchor.x + this._shadowOffset.x, -g.height * this.anchor.y + this._shadowOffset.y);
+      }
+
+      // put the tint back for the rest of the drawing
+      ctx.tint = this._shadowTintCache;
+    };
+  }
+
+  public async move(engine: ex.Engine, delta: number, movement: ex.Vector) {
+    movement = movement.scale(this._moveSpeed * (delta / 1000));
+
+    this.pos = this.pos.add(movement);
+
+    if (movement.x !== 0) {
+      this._flipHorizontal = movement.x > 0;
+      this.graphics.flipHorizontal = this._flipHorizontal;
+    }
+
+    MiniGameAnimations.scaleDownAndUpAsync(this);
+    MiniGameAnimations.particlesAddDustAsync(this, 100);
+  }
+
+  // Event Handlers -------------------------------
+}
