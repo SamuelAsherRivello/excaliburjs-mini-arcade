@@ -1,0 +1,142 @@
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+1. Asteroids
+Overview: A space shooter where the player controls a ship that must destroy asteroids while avoiding collisions.
+
+Input for keyboard:
+
+Rotate Left: Left Arrow
+Rotate Right: Right Arrow
+Thrust: Up Arrow
+Shoot: Spacebar
+Restart: R
+Fullscreen: F
+UI for score, lives:
+
+Score: Displayed at the top left of the screen, increasing with each destroyed asteroid.
+Lives: Displayed at the top right of the screen, decreasing with each collision.
+Sounds:
+
+Shooting: A laser or blaster sound when the player fires.
+Explosion: A sound for when asteroids are destroyed.
+Thrust: A continuous engine sound when the ship is moving.
+Collision: A crash sound when the ship hits an asteroid.
+Game Over: A distinct sound for when the player loses all lives.
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+2. Breakout
+Overview: A game where the player controls a paddle to bounce a ball and break bricks.
+
+Input for keyboard:
+
+Move Left: Left Arrow
+Move Right: Right Arrow
+Launch Ball: Spacebar
+Restart: R
+Fullscreen: F
+UI for score, lives:
+
+Score: Displayed at the top of the screen, increasing with each brick destroyed.
+Lives: Displayed at the top right of the screen, decreasing when the ball is missed.
+Sounds:
+
+Ball Bounce: A sharp sound when the ball hits the paddle or wall.
+Brick Break: A different, slightly deeper sound for breaking bricks.
+Power-Up: A special sound when a power-up is collected.
+Launch Ball: A sound for when the ball is launched at the start.
+Game Over: A sound for when the player loses the game.
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+3. Pac-Man
+Overview: A maze chase game where Pac-Man eats dots and avoids ghosts.
+
+Input for keyboard:
+
+Move Up: Up Arrow
+Move Down: Down Arrow
+Move Left: Left Arrow
+Move Right: Right Arrow
+Restart: R
+Fullscreen: F
+UI for score, lives:
+
+Score: Displayed at the top center of the screen, increasing with each dot eaten.
+Lives: Displayed at the bottom left of the screen, decreasing with each ghost collision.
+Sounds:
+
+Dot Eat: A chomping sound for eating dots.
+Power Pellet: A special sound when eating a power pellet.
+Ghost Eat: A distinctive sound when Pac-Man eats a ghost.
+Ghost Collision: A sound for when Pac-Man collides with a ghost and loses a life.
+Game Start: A brief sound for when the game starts.
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+4. Frogger
+Overview: A game where the player guides a frog across a busy road and river to safety.
+
+Input for keyboard:
+
+Move Up: Up Arrow
+Move Down: Down Arrow
+Move Left: Left Arrow
+Move Right: Right Arrow
+Restart: R
+Fullscreen: F
+UI for score, lives:
+
+Score: Displayed at the top left of the screen, increasing with each successful crossing.
+Lives: Displayed at the top right of the screen, decreasing with each hit or fall into water.
+Sounds:
+
+Jump: A sound for each jump the frog makes.
+Splash: A sound for when the frog falls into the water.
+Hit: A sound for when the frog gets hit by a vehicle.
+Success: A cheerful sound for when the frog reaches safety.
+Game Over: A sound for when the player loses all lives.
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+5. Donkey Kong
+Overview: A platformer where the player climbs ladders and avoids obstacles to rescue a damsel in distress.
+
+Input for keyboard:
+
+Move Left: Left Arrow
+Move Right: Right Arrow
+Jump: Spacebar
+Restart: R
+Fullscreen: F
+UI for score, lives:
+
+Score: Displayed at the top left of the screen, increasing with each obstacle overcome and item collected.
+Lives: Displayed at the top right of the screen, decreasing with each hit by an obstacle.
+Sounds:
+
+Jump: A sound for when the character jumps.
+Obstacle Hit: A sound for when the character is hit by an obstacle.
+Climb Ladder: A brief sound for climbing ladders.
+Collect Item: A sound for picking up items.
+Game Start: A sound for starting the game.
