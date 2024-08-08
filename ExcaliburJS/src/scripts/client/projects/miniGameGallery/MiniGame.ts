@@ -94,7 +94,8 @@ export class MiniGame extends Game {
     }
 
     if (this.controller.resetGame.wasPressed) {
-      console.log('todo: make reset');
+      //TODO: reload THE GAME instead of reloading THE PAGE
+      location.reload();
     }
   }
 

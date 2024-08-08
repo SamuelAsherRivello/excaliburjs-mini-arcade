@@ -5,10 +5,11 @@ import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollec
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { ScaleAspectRatio, RelativeTo, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 import { CameraShake, MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
+import { MiniGameBehaviors } from '@client/projects/miniGameGallery/systems/MiniGameBehaviors';
 
-export interface ShipPlayerConfiguration extends ActorConfiguration {}
+export interface AsteroidsPlayerConfiguration extends ActorConfiguration {}
 
-export const ShipPlayerConfigurationDefault: ShipPlayerConfiguration = {
+export const AsteroidsPlayerConfigurationDefault: AsteroidsPlayerConfiguration = {
   imageSource: asteroidsResourceCollection.get<ex.ImageSource>('Ship01'),
   collisionGroup: AsteroidsCollisionGroups.Player,
   collisionType: ex.CollisionType.Active,
@@ -30,10 +31,10 @@ export const ShipPlayerConfigurationDefault: ShipPlayerConfiguration = {
 /**
  * Represents the player-controlled ship in the Asteroids game.
  */
-export class ShipPlayer extends ActorAdvanced {
+export class AsteroidsPlayer extends ActorAdvanced {
   // Events ---------------------------------------
-  public override get configuration(): ShipPlayerConfiguration {
-    return this._configuration as ShipPlayerConfiguration;
+  public override get configuration(): AsteroidsPlayerConfiguration {
+    return this._configuration as AsteroidsPlayerConfiguration;
   }
   // Properties -----------------------------------
 
@@ -52,15 +53,15 @@ export class ShipPlayer extends ActorAdvanced {
   private _shootCooldown: number = 250;
 
   // Initialization -------------------------------
-  constructor(configuration: ShipPlayerConfiguration = ShipPlayerConfigurationDefault) {
+  constructor(configuration: AsteroidsPlayerConfiguration = AsteroidsPlayerConfigurationDefault) {
     //
-    configuration = { ...ShipPlayerConfigurationDefault, ...configuration };
+    configuration = { ...AsteroidsPlayerConfigurationDefault, ...configuration };
     super(configuration);
     //
   }
 
   // Methods --------------------------------------
-  onInitialize() {
+  public onInitialize() {
     const sprite = this.configuration.imageSource!.toSprite();
     sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
     this.graphics.add(sprite);
@@ -72,13 +73,13 @@ export class ShipPlayer extends ActorAdvanced {
     );
   }
 
-  onPreUpdate(engine: ex.Engine, delta: number): void {
+  public onPreUpdate(engine: ex.Engine, delta: number): void {
     this.applyDrag(delta);
-    this.wrapAround(engine);
+    this.setPositionWrapAroundScreen(engine);
     this.updateShootCooldown(delta);
   }
 
-  rotate(engine: ex.Engine, delta: number, direction: number): void {
+  public rotate(engine: ex.Engine, delta: number, direction: number): void {
     if (direction !== 0) {
       this._rotationHoldTime += delta;
       this._currentRotationSpeed += this.RotationAcceleration * delta * direction;
@@ -96,7 +97,7 @@ export class ShipPlayer extends ActorAdvanced {
     this.rotation += this._currentRotationSpeed;
   }
 
-  move(engine: ex.Engine, delta: number): void {
+  public move(engine: ex.Engine, delta: number): void {
     const thrustVector = ex.vec(Math.sin(this.rotation) * this.ThrustForce, -Math.cos(this.rotation) * this.ThrustForce);
     this.vel = this.vel.add(thrustVector.scale(delta / 1000));
 
@@ -124,8 +125,8 @@ export class ShipPlayer extends ActorAdvanced {
     bullet.z = this.z - 1;
     engine.add(bullet);
 
+    this.actions.clearActions();
     await MiniGameAnimations.cameraShakeAsync(engine, CameraShake.Light);
-
     asteroidsResourceCollection.get<ex.Sound>('Shoot01').play();
   }
 
@@ -134,8 +135,8 @@ export class ShipPlayer extends ActorAdvanced {
     this.vel = this.vel.add(dragForce.scale(delta / 1000));
   }
 
-  private wrapAround(engine: ex.Engine): void {
-    this.pos = new ex.Vector((this.pos.x + engine.drawWidth) % engine.drawWidth, (this.pos.y + engine.drawHeight) % engine.drawHeight);
+  private setPositionWrapAroundScreen(engine: ex.Engine): void {
+    MiniGameBehaviors.setPositionWrapAroundScreen(this, engine, true);
   }
 
   private updateShootCooldown(delta: number): void {

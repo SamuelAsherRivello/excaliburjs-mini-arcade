@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { AsteroidsPlayer } from '../games/asteroids/actors/AsteroidsPlayer';
 
 export enum CameraShake {
   Light,
@@ -54,6 +55,8 @@ export class MiniGameAnimations {
         particleEmitter.kill();
       })
       .delay(1000);
+
+    return Promise.resolve();
   }
 
   /**
@@ -79,12 +82,12 @@ export class MiniGameAnimations {
     }
   }
   public static async awaitNextFrameAsync() {
-    await MiniGameAnimations.awaitTimeAsync(1000 / 30); // assume 30fps or higher
+    return MiniGameAnimations.awaitTimeAsync(1000 / 30); // assume 30fps or higher
   }
 
   public static async awaitTimeAsync(durationMs: number) {
     //TODO: I don't think this works or works well.
-    await new Promise((resolve) => setTimeout(resolve, durationMs));
+    return new Promise((resolve) => setTimeout(resolve, durationMs));
   }
 
   public static async scaleUpAndFadeUpAsync(target: ex.Actor, animationConfiguration?: AnimationConfiguration) {
@@ -92,7 +95,6 @@ export class MiniGameAnimations {
     animationConfiguration = { ...AnimationConfigurationDefault, ...animationConfiguration };
 
     // Initial
-    target.actions.clearActions();
     target.scale = ex.vec(0, 0);
     target.graphics.opacity = 0;
 
@@ -109,31 +111,45 @@ export class MiniGameAnimations {
     });
 
     const parallel = new ex.ParallelActions([change1, change2]);
-    await target.actions.runAction(parallel);
+    target.actions.runAction(parallel);
+
+    while (!parallel.isComplete(target)) {
+      await MiniGameAnimations.awaitNextFrameAsync();
+    }
+    return Promise.resolve();
   }
 
-  public static async scaleDownAndFadeDownAsync(target: ex.Actor) {
+  public static async scaleDownAndFadeDownAsync(target: ex.Actor, animationConfiguration?: AnimationConfiguration) {
+    //Spread
+    animationConfiguration = { ...AnimationConfigurationDefault, ...animationConfiguration };
+
     // Initial
     //target.scale = ex.vec(1, 1);
     //target.graphics.opacity = 1;
 
-    // Delta
-    target.actions.clearActions();
+    // Delay
+    await MiniGameAnimations.awaitTimeAsync(animationConfiguration.delay!);
+
+    //change
     const change1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(0, 0), ex.vec(2, 2));
     });
 
     const change2 = new ex.ActionSequence(target, (ctx) => {
-      ctx.fade(0, 100);
+      ctx.fade(0, animationConfiguration.delay!);
     });
 
     const parallel = new ex.ParallelActions([change1, change2]);
     await target.actions.runAction(parallel);
+
+    while (!parallel.isComplete(target)) {
+      await MiniGameAnimations.awaitNextFrameAsync();
+    }
+    return Promise.resolve();
   }
 
   public static async scaleUpAndDownAsync(target: ex.Actor) {
     // Delta
-    target.actions.clearActions();
     const change1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(1.2, 1.2), ex.vec(2, 2));
       ctx.scaleTo(ex.vec(1, 1), ex.vec(2, 2));
@@ -141,11 +157,15 @@ export class MiniGameAnimations {
 
     const parallel = new ex.ParallelActions([change1]);
     await target.actions.runAction(parallel);
+
+    while (!parallel.isComplete(target)) {
+      await MiniGameAnimations.awaitNextFrameAsync();
+    }
+    return Promise.resolve();
   }
 
   public static async scaleDownAndUpAsync(target: ex.Actor) {
     // Delta
-    target.actions.clearActions();
     const change1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(0.7, 0.7), ex.vec(4, 4));
       ctx.scaleTo(ex.vec(1, 1), ex.vec(4, 4));
@@ -153,5 +173,10 @@ export class MiniGameAnimations {
 
     const parallel = new ex.ParallelActions([change1]);
     await target.actions.runAction(parallel);
+
+    while (!parallel.isComplete(target)) {
+      await MiniGameAnimations.awaitNextFrameAsync();
+    }
+    return Promise.resolve();
   }
 }

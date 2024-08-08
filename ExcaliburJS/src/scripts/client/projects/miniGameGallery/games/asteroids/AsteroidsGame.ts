@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 import { Background as Background, BackgroundConfiguration, BackgroundConfigurationDefault } from '@client/core/engines/excaliburjs/actors/Background';
-import { ShipPlayer, ShipPlayerConfigurationDefault } from './actors/ShipPlayer';
+import { AsteroidsPlayer, AsteroidsPlayerConfigurationDefault } from './actors/AsteroidsPlayer';
 import { Asteroid } from './actors/Asteroid';
 import { asteroidsResourceCollection } from './settings/AsteroidsResourceCollection';
 import { MiniGame } from '../../MiniGame';
@@ -12,7 +12,7 @@ export class AsteroidsGame extends MiniGame {
 
   // Fields ---------------------------------------
   private _background!: Background;
-  private _player!: ShipPlayer;
+  private _player!: AsteroidsPlayer;
 
   // Initialization -------------------------------
   constructor() {
@@ -55,7 +55,7 @@ export class AsteroidsGame extends MiniGame {
   }
 
   private initializePlayer(): void {
-    this._player = new ShipPlayer(ShipPlayerConfigurationDefault);
+    this._player = new AsteroidsPlayer(AsteroidsPlayerConfigurationDefault);
     this.currentScene.add(this._player);
   }
 
@@ -91,6 +91,7 @@ export class AsteroidsGame extends MiniGame {
   }
 
   // Event Handlers -------------------------------
+
   private asteroid_onCreate(asteroid: Asteroid) {
     asteroid.on('kill', () => {
       this.model.score.value += 10 * asteroid.generation;

@@ -5,7 +5,7 @@ import { MiniGameAnimations } from '../../../systems/MiniGameAnimations';
 import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
-import { config } from 'process';
+import { IDestroyable } from '@client/core/interfaces/IDestroyable';
 
 export interface BulletConfiguration extends ActorConfiguration {}
 
@@ -22,16 +22,21 @@ export const BulletConfigurationDefault: BulletConfiguration = {
     },
   },
 };
-export class Bullet extends ActorAdvanced {
+export class Bullet extends ActorAdvanced implements IDestroyable {
   // Properties -----------------------------------
   public override get configuration(): BulletConfiguration {
     return this._configuration as BulletConfiguration;
+  }
+
+  public get isDestroying(): boolean {
+    return this._isDestroying;
   }
 
   // Fields ---------------------------------------
   public static readonly Speed: number = 500;
   private _lifespan: number = 2000; // 2 seconds in milliseconds
   private _hasTakenDamage: Boolean = false;
+  private _isDestroying: boolean = false;
 
   // Initialization -------------------------------
   constructor(configuration: BulletConfiguration) {
@@ -49,7 +54,7 @@ export class Bullet extends ActorAdvanced {
     sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
     this.graphics.use(sprite);
 
-    const radiusFactor = 0.5; // Make smaller
+    const radiusFactor = 0.25; // Make smaller
     this.collider.set(
       new ex.CircleCollider({
         radius: Math.max(sprite.width / 2, sprite.height / 2) * radiusFactor,
@@ -81,15 +86,31 @@ export class Bullet extends ActorAdvanced {
       }
     }, this._lifespan);
 
-    await MiniGameAnimations.scaleUpAndFadeUpAsync(this);
+    this.actions.clearActions();
+    await MiniGameAnimations.scaleUpAndFadeUpAsync(this, { duration: 100 });
   }
-
-  onPreKill(scene: ex.Scene): void {}
 
   // Methods --------------------------------------
   public async takeDamage(engine: ex.Engine) {
     this.body.collisionType = ex.CollisionType.PreventCollision;
-    await MiniGameAnimations.scaleDownAndFadeDownAsync(this);
+    this.destroyAsync();
+  }
+
+  // Event Handlers -------------------------------
+  public async destroyAsync() {
+    // Prep
+    this._isDestroying = true; //Useful for turning off any movement
+    this.vel = ex.vec(0, 0);
+    this.collider.clear();
+
+    // Wait
+    this.actions.clearActions();
+    await MiniGameAnimations.scaleDownAndFadeDownAsync(this, { duration: 100 });
+
+    // Result
+    this.onDestroyComplete();
+  }
+  public async onDestroyComplete() {
     this.kill();
   }
 }

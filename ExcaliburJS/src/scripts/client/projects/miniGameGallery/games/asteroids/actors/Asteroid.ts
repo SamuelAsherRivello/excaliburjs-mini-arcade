@@ -3,6 +3,8 @@ import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollec
 import { MiniGameAnimations } from '../../../systems/MiniGameAnimations';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
+import { IDestroyable } from '@client/core/interfaces/IDestroyable';
+import { MiniGameBehaviors } from '@client/projects/miniGameGallery/systems/MiniGameBehaviors';
 
 export interface AsteroidConfiguration extends ActorConfiguration {
   velocity: ex.Vector;
@@ -26,7 +28,7 @@ export const AsteroidConfigurationDefault: AsteroidConfiguration = {
   },
 };
 
-export class Asteroid extends ActorAdvanced {
+export class Asteroid extends ActorAdvanced implements IDestroyable {
   // Properties -----------------------------------
   public override get configuration(): AsteroidConfiguration {
     return this._configuration as AsteroidConfiguration;
@@ -35,9 +37,15 @@ export class Asteroid extends ActorAdvanced {
   public get generation() {
     return this._generation;
   }
+
+  public get isDestroying(): boolean {
+    return this._isDestroying;
+  }
+
   // Fields ----------------------------------------
   private readonly RotationSpeed: number = Math.random() * 0.001 - 0.003;
   private readonly MaxGeneration: number = 3;
+  private _isDestroying: boolean = false;
   private _generation: number;
   private _onAddedCallback: (asteroid: Asteroid) => void;
 
@@ -76,7 +84,7 @@ export class Asteroid extends ActorAdvanced {
     this.body.useGravity = false;
   }
 
-  async onInitialize(engine: ex.Engine) {
+  public async onInitialize(engine: ex.Engine) {
     const sprite = this.configuration.imageSource!.toSprite();
     const scaleOffsetByGeneration = this._generation / this.MaxGeneration;
     sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource).scale(scaleOffsetByGeneration);
@@ -89,15 +97,17 @@ export class Asteroid extends ActorAdvanced {
       }),
     );
 
+    this.actions.clearActions();
     await MiniGameAnimations.scaleUpAndFadeUpAsync(this);
   }
 
-  onPreUpdate(engine: ex.Engine, delta: number): void {
+  public onPreUpdate(engine: ex.Engine, delta: number): void {
     // Rotate the asteroid
     this.rotation += this.RotationSpeed;
-
-    // Wrap around screen
-    this.pos = new ex.Vector((this.pos.x + engine.drawWidth) % engine.drawWidth, (this.pos.y + engine.drawHeight) % engine.drawHeight);
+    this.setPositionWrapAroundScreen(engine);
+  }
+  public setPositionWrapAroundScreen(engine: ex.Engine<any>) {
+    MiniGameBehaviors.setPositionWrapAroundScreen(this, engine, true);
   }
 
   public async takeDamage(engine: ex.Engine) {
@@ -106,8 +116,24 @@ export class Asteroid extends ActorAdvanced {
       Asteroid.createAndAdd(engine, 3, this._generation - 1, this._onAddedCallback, new ex.Vector(this.pos.x, this.pos.y));
     }
 
+    this.destroyAsync();
+  }
+
+  public async destroyAsync() {
+    // Prep
+    this._isDestroying = true; //Useful for turning off any movement
+    this.vel = ex.vec(0, 0);
+    this.collider.clear();
+
+    // Wait
     this.actions.clearActions();
-    await MiniGameAnimations.scaleDownAndFadeDownAsync(this);
+    await MiniGameAnimations.scaleDownAndFadeDownAsync(this, { duration: 100 });
+
+    // Result
+    this.onDestroyComplete();
+  }
+
+  public onDestroyComplete() {
     this.kill();
   }
 }
