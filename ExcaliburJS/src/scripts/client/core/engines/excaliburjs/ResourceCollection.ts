@@ -3,7 +3,7 @@
 import { ImageSource, Sound, FontSource, Loader } from 'excalibur';
 import { IInitializableAsync } from '../../interfaces/IInitializeAsync';
 
-type ImportedAsset = string | { default: string };
+export type ImportedAsset = string | { default: string };
 
 export class ResourceCollection implements IInitializableAsync {
   public get loader(): Loader {

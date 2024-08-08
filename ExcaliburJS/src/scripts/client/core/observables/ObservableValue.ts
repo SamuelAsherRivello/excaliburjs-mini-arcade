@@ -72,7 +72,7 @@ class EventEmitter {
   }
 }
 
-interface IEvent<TPrevious, TCurrent> {
+export interface IEvent<TPrevious, TCurrent> {
   addEventListener(listener: (previousValue: TPrevious, currentValue: TCurrent) => void): void;
   removeEventListener(listener: (previousValue: TPrevious, currentValue: TCurrent) => void): void;
   invoke(previousValue: TPrevious, currentValue: TCurrent): void;
