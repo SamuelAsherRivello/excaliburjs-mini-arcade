@@ -16,12 +16,12 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      'prettier': prettier,
+      prettier: prettier,
     },
     rules: {
       ...tseslint.configs['recommended'].rules,
       'prettier/prettier': 'error',
-      // Add any custom rules here
+      '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
     },
   },
   eslintConfigPrettier,
