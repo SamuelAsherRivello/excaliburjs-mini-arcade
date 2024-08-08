@@ -1,7 +1,4 @@
 import * as ex from 'excalibur';
-import { FrogPlayer } from '../games/frogger/actors/FrogPlayer';
-import { Engine } from 'excalibur';
-import { StarterPlayer } from '../games/templateGame/actors/StarterPlayer';
 
 export enum CameraShake {
   Light,
@@ -19,7 +16,7 @@ const AnimationConfigurationDefault: AnimationConfiguration = {
   delay: 0,
 };
 
-export class MiniArcadeAnimations {
+export class MiniGameAnimations {
   public static callAfterDelay(target: ex.Actor, delay: number, method: () => void) {
     target.actions.delay(delay).callMethod(method);
   }
@@ -53,7 +50,7 @@ export class MiniArcadeAnimations {
         particleEmitter.particleLife;
         target.addChild(particleEmitter);
 
-        await MiniArcadeAnimations.awaitTimeAsync(duration);
+        await MiniGameAnimations.awaitTimeAsync(duration);
         particleEmitter.kill();
       })
       .delay(1000);
@@ -82,7 +79,7 @@ export class MiniArcadeAnimations {
     }
   }
   public static async awaitNextFrameAsync() {
-    await MiniArcadeAnimations.awaitTimeAsync(1000 / 30); // assume 30fps or higher
+    await MiniGameAnimations.awaitTimeAsync(1000 / 30); // assume 30fps or higher
   }
 
   public static async awaitTimeAsync(durationMs: number) {
@@ -100,7 +97,7 @@ export class MiniArcadeAnimations {
     target.graphics.opacity = 0;
 
     // Delay
-    await MiniArcadeAnimations.awaitTimeAsync(animationConfiguration.delay!);
+    await MiniGameAnimations.awaitTimeAsync(animationConfiguration.delay!);
 
     // Delta
     const change1 = new ex.ActionSequence(target, (ctx) => {

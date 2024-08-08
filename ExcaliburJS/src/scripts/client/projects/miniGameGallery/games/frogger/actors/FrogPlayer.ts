@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { AsteroidsCollisionGroups } from '../../asteroids/settings/AsteroidsCollisionGroups';
 import { froggerResourceCollection } from '../settings/FroggerResourceCollection';
-import { MiniArcadeAnimations } from '@client/projects/miniArcade/settings/MiniArcadeAnimations';
+import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 
 /**
  * Represents the player-controlled frog in the Frogger game.
@@ -52,9 +52,9 @@ export class FrogPlayer extends ex.Actor {
     this.graphics.use('jump');
 
     // Complete the jump animation
-    await MiniArcadeAnimations.scaleUpAndDownAsync(this);
+    await MiniGameAnimations.scaleUpAndDownAsync(this);
 
-    await MiniArcadeAnimations.awaitTimeAsync(200);
+    await MiniGameAnimations.awaitTimeAsync(200);
 
     this.graphics.use('idle');
   }

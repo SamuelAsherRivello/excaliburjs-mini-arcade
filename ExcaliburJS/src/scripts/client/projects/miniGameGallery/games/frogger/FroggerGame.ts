@@ -1,17 +1,19 @@
 import * as ex from 'excalibur';
-import { MiniArcadeGame } from '../../base/MiniArcadeGame';
-import { starterResourceCollection } from './settings/StarterResourceCollection';
-import { Background, BackgroundConfiguration } from '@client/core/engines/excaliburjs/actors/Background';
-import { StarterPlayer } from './actors/StarterPlayer';
+import { FrogPlayer } from './actors/FrogPlayer';
+import { froggerResourceCollection } from './settings/FroggerResourceCollection';
+import { Background } from '@client/core/engines/excaliburjs/actors/Background';
+import { TrafficLevel } from './actors/TrafficLevel';
+import { MiniGame } from '../../MiniGame';
 
-export class StarterGame extends MiniArcadeGame {
+export class FroggerGame extends MiniGame {
   // Events ---------------------------------------
 
   // Properties -----------------------------------
 
   // Fields ---------------------------------------
-  private _player!: StarterPlayer;
-  private _background!: Background;
+  private _player!: FrogPlayer;
+  private _background!: ex.Actor;
+  private _level!: TrafficLevel;
 
   // Initialization -------------------------------
   constructor() {
@@ -24,13 +26,14 @@ export class StarterGame extends MiniArcadeGame {
       return Promise.resolve();
     }
 
-    await starterResourceCollection.initializeAsync();
-    this.start(starterResourceCollection.loader);
+    await froggerResourceCollection.initializeAsync();
+    this.start(froggerResourceCollection.loader);
 
     await super.initializeAsync();
-    this.initializeBackground();
-    this.initializePlayer();
 
+    this.initializeBackground();
+    this.initializeLevel();
+    this.initializePlayer();
     // Set Values
     this.model.score.value = 0;
     this.model.lives.value = 3;
@@ -43,7 +46,6 @@ export class StarterGame extends MiniArcadeGame {
 
   protected override checkGameOver() {
     if (this.model.lives.value <= 0) {
-      this.model.lives.value = 0;
       console.log('Gameover');
     }
   }
@@ -52,58 +54,47 @@ export class StarterGame extends MiniArcadeGame {
 
   // Helper Methods -------------------------------
   private initializeBackground(): void {
-    const backgroundConfiguration: BackgroundConfiguration = {
-      imageSource: starterResourceCollection.get<ex.ImageSource>('Background01'),
-      isScrolling: false,
-    };
-    this._background = new Background(backgroundConfiguration);
+    this._background = new Background({
+      imageSource: froggerResourceCollection.get<ex.ImageSource>('Background01'),
+    });
     this.currentScene.add(this._background);
   }
 
+  private initializeLevel(): void {
+    this._level = new TrafficLevel({
+      width: this.screen.resolution.width,
+      height: this.screen.resolution.height,
+    });
+    this._level.pos.x = this.screen.resolution.width / 2;
+    this._level.pos.y = this.screen.resolution.height / 2;
+    this.currentScene.add(this._level);
+  }
+
   private initializePlayer(): void {
-    this._player = new StarterPlayer();
+    this._player = new FrogPlayer();
     this._player.pos.x = this.screen.resolution.width / 2;
-    this._player.pos.y = this.screen.resolution.height / 2;
+    this._player.pos.y = this.screen.resolution.height - 50;
     this.currentScene.add(this._player);
+    this._player.z = 10000;
   }
 
   private handlePlayerInput(engine: ex.Engine, delta: number): void {
     if (this.controller.left.wasPressed) {
       this._player.move(engine, delta, new ex.Vector(-1, 0));
-      //
-      starterResourceCollection.get<ex.Sound>('Hit01').play();
-      //
-      this.model.score.value += 1;
-      //
+      froggerResourceCollection.get<ex.Sound>('Hit01').play();
     } else if (this.controller.right.wasPressed) {
       this._player.move(engine, delta, new ex.Vector(1, 0));
-      //
-      starterResourceCollection.get<ex.Sound>('Hit01').play();
-      //
-      this.model.score.value += 1;
-      //
+      froggerResourceCollection.get<ex.Sound>('Hit01').play();
     } else if (this.controller.up.wasPressed) {
       this._player.move(engine, delta, new ex.Vector(0, -1));
-      //
-      starterResourceCollection.get<ex.Sound>('Hit01').play();
-      //
-      this.model.score.value += 1;
-      //
+      froggerResourceCollection.get<ex.Sound>('Hit01').play();
     } else if (this.controller.down.wasPressed) {
       this._player.move(engine, delta, new ex.Vector(0, 1));
-      //
-      starterResourceCollection.get<ex.Sound>('Hit01').play();
-      //
-      this.model.score.value += 1;
-      //
+      froggerResourceCollection.get<ex.Sound>('Hit01').play();
     }
 
     if (this.controller.action.wasPressed) {
-      //
-      starterResourceCollection.get<ex.Sound>('Hit01').play();
-      //
-      this.model.lives.value -= 1;
-      //
+      // Action button logic here
     }
   }
 }

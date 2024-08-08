@@ -4,7 +4,7 @@ import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollection';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { ScaleAspectRatio, RelativeTo, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
-import { CameraShake, MiniArcadeAnimations } from '@client/projects/miniArcade/settings/MiniArcadeAnimations';
+import { CameraShake, MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 
 export interface ShipPlayerConfiguration extends ActorConfiguration {}
 
@@ -124,7 +124,7 @@ export class ShipPlayer extends ActorAdvanced {
     bullet.z = this.z - 1;
     engine.add(bullet);
 
-    await MiniArcadeAnimations.cameraShakeAsync(engine, CameraShake.Light);
+    await MiniGameAnimations.cameraShakeAsync(engine, CameraShake.Light);
 
     asteroidsResourceCollection.get<ex.Sound>('Shoot01').play();
   }

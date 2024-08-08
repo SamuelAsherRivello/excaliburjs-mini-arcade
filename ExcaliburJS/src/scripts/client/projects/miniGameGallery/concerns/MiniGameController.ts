@@ -1,12 +1,12 @@
 import { BaseController } from '../../../core/engines/excaliburjs/controller/BaseController';
-import { ActionState, MiniArcadeInput } from '../settings/MiniArcadeInput';
+import { ActionState, MiniGameInput } from '../systems/MiniGameInput';
 
-export class MiniArcadeController extends BaseController {
-  private input: MiniArcadeInput;
+export class MiniGameController extends BaseController {
+  private input: MiniGameInput;
 
   constructor() {
     super();
-    this.input = new MiniArcadeInput();
+    this.input = new MiniGameInput();
   }
 
   update(engine: ex.Engine, delta: number): void {

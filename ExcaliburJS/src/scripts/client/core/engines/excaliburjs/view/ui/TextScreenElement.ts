@@ -1,6 +1,5 @@
 import * as ex from 'excalibur';
 import { LayoutConfiguration, LayoutEngine, RelativeTo, ScaleAspectRatio, Unit } from '../../layout/LayoutEngine';
-import { MiniArcadeGame } from '@client/projects/miniArcade/base/MiniArcadeGame';
 
 export class TextScreenElement extends ex.ScreenElement {
   // Properties -----------------------------------

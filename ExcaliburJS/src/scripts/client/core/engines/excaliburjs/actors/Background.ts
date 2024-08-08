@@ -1,7 +1,7 @@
 import { ActorAdvanced, ActorConfiguration } from './ActorAdvanced';
 import { ScaleAspectRatio, RelativeTo, Unit } from '../layout/LayoutEngine';
 import * as ex from 'excalibur';
-import { asteroidsResourceCollection } from '@client/projects/miniArcade/games/asteroids/settings/AsteroidsResourceCollection';
+import { asteroidsResourceCollection } from '@client/projects/miniGameGallery/games/asteroids/settings/AsteroidsResourceCollection';
 
 export interface BackgroundConfiguration extends ActorConfiguration {
   isScrolling?: boolean;

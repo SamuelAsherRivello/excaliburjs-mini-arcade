@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { AsteroidsCollisionGroups } from '../../asteroids/settings/AsteroidsCollisionGroups';
 import { breakoutResourceCollection } from '../settings/BreakoutResourceCollection';
-import { MiniArcadeAnimations } from '@client/projects/miniArcade/settings/MiniArcadeAnimations';
+import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 import { SpriteUtility } from '@client/core/engines/excaliburjs/utilities/SpriteUtility';
 
 /**
@@ -68,8 +68,8 @@ export class BreakoutPlayer extends ex.Actor {
       this.graphics.flipHorizontal = this._flipHorizontal;
     }
 
-    await MiniArcadeAnimations.scaleDownAndUpAsync(this);
-    await MiniArcadeAnimations.awaitTimeAsync(200);
+    await MiniGameAnimations.scaleDownAndUpAsync(this);
+    await MiniGameAnimations.awaitTimeAsync(200);
   }
 
   // Event Handlers -------------------------------

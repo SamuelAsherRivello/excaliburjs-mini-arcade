@@ -1,11 +1,11 @@
 import * as ex from 'excalibur';
-import { MiniArcadeGame } from '../../base/MiniArcadeGame';
 import { breakoutResourceCollection } from './settings/BreakoutResourceCollection';
 import { Background } from '@client/core/engines/excaliburjs/actors/Background';
 import { BreakoutPlayer } from './actors/BreakoutPlayer';
 import { TileLevel } from './actors/TileLevel';
+import { MiniGame } from '../../MiniGame';
 
-export class BreakoutGame extends MiniArcadeGame {
+export class BreakoutGame extends MiniGame {
   // Events ---------------------------------------
 
   // Properties -----------------------------------

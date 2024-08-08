@@ -2,10 +2,10 @@ import * as ex from 'excalibur';
 import { Background as Background, BackgroundConfiguration, BackgroundConfigurationDefault } from '@client/core/engines/excaliburjs/actors/Background';
 import { ShipPlayer, ShipPlayerConfigurationDefault } from './actors/ShipPlayer';
 import { Asteroid } from './actors/Asteroid';
-import { MiniArcadeGame } from '../../base/MiniArcadeGame';
 import { asteroidsResourceCollection } from './settings/AsteroidsResourceCollection';
+import { MiniGame } from '../../MiniGame';
 
-export class AsteroidsGame extends MiniArcadeGame {
+export class AsteroidsGame extends MiniGame {
   // Events ---------------------------------------
 
   // Properties -----------------------------------

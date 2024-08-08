@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollection';
-import { MiniArcadeAnimations } from '../../../settings/MiniArcadeAnimations';
+import { MiniGameAnimations } from '../../../systems/MiniGameAnimations';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 
@@ -89,7 +89,7 @@ export class Asteroid extends ActorAdvanced {
       }),
     );
 
-    await MiniArcadeAnimations.scaleUpAndFadeUpAsync(this);
+    await MiniGameAnimations.scaleUpAndFadeUpAsync(this);
   }
 
   onPreUpdate(engine: ex.Engine, delta: number): void {
@@ -107,7 +107,7 @@ export class Asteroid extends ActorAdvanced {
     }
 
     this.actions.clearActions();
-    await MiniArcadeAnimations.scaleDownAndFadeDownAsync(this);
+    await MiniGameAnimations.scaleDownAndFadeDownAsync(this);
     this.kill();
   }
 }

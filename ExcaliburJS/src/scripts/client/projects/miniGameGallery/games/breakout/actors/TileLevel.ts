@@ -3,7 +3,7 @@ import { breakoutResourceCollection } from '../settings/BreakoutResourceCollecti
 import { ImageSource } from 'excalibur';
 import { Tile, TileConfigurationDefault } from './Tile';
 import { LayoutEngine, RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
-import { MiniArcadeAnimations } from '../../../settings/MiniArcadeAnimations';
+import { MiniGameAnimations } from '../../../systems/MiniGameAnimations';
 
 export class TileLevel extends ex.Actor {
   constructor(config: { width: number; height: number }) {
@@ -52,13 +52,13 @@ export class TileLevel extends ex.Actor {
         // Fade in
         const tileForAsync = tile;
         tile.graphics.opacity = 0;
-        MiniArcadeAnimations.callAfterFrame(tileForAsync, this.tileEntrance.bind(this, tileForAsync, index));
+        MiniGameAnimations.callAfterFrame(tileForAsync, this.tileEntrance.bind(this, tileForAsync, index));
       }
       x = startX;
       y += tile!.width / (384 / 128); //TODO: Works, but I'd like to use tile.height. Not working???
     }
   }
   private async tileEntrance(tile: Tile, index: number) {
-    await MiniArcadeAnimations.scaleUpAndFadeUpAsync(tile, { duration: 100, delay: 3 * index });
+    await MiniGameAnimations.scaleUpAndFadeUpAsync(tile, { duration: 100, delay: 3 * index });
   }
 }

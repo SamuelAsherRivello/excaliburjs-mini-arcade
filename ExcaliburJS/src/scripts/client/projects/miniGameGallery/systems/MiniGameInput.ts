@@ -7,7 +7,7 @@ export interface ActionState {
   wasReleased: boolean;
 }
 
-export class MiniArcadeInput {
+export class MiniGameInput {
   private _lastPointerDownTime: number = 0;
   private _isPointerDown: boolean = false;
   private _isPointerDoubleClick: boolean = false;

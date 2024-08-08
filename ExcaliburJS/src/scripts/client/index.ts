@@ -1,23 +1,23 @@
-import { EngineSingleton } from './core/engines/excaliburjs/singletons/EngineSingleton';
-import { MiniArcadeGame } from './projects/miniArcade/base/MiniArcadeGame';
-//
-import { AsteroidsGame } from './projects/miniArcade/games/asteroids/AsteroidsGame';
-import { BreakoutGame } from './projects/miniArcade/games/breakout/BreakoutGame';
-import { FroggerGame } from './projects/miniArcade/games/frogger/FroggerGame';
-import { StarterGame } from './projects/miniArcade/games/templateGame/StarterGame';
+import { AsteroidsGame } from './projects/miniGameGallery/games/asteroids/AsteroidsGame';
+import { BreakoutGame } from './projects/miniGameGallery/games/breakout/BreakoutGame';
+import { FroggerGame } from './projects/miniGameGallery/games/frogger/FroggerGame';
+import { StarterGame } from './projects/miniGameGallery/games/templateGame/StarterGame';
+import { MiniGameGallery } from './projects/miniGameGallery/MiniGameGallery';
 
 /////////////////////////
-let game: MiniArcadeGame;
+const miniGameGallery: MiniGameGallery = new MiniGameGallery();
 
 /////////////////////////
-//game = new AsteroidsGame();
-game = new BreakoutGame();
-//game = new FroggerGame();
-//game = new StarterGame();
+miniGameGallery.addGame(AsteroidsGame);
+miniGameGallery.addGame(BreakoutGame);
+miniGameGallery.addGame(FroggerGame);
+miniGameGallery.addGame(StarterGame);
 
 /////////////////////////
-//TODO: Rethink this (Needed by LayoutEngine.ts)
-EngineSingleton.instance = game;
+(async () => {
+  /////////////////////////
+  await miniGameGallery.initializeAsync();
 
-/////////////////////////
-game.initializeAsync();
+  /////////////////////////
+  await miniGameGallery.showGameAtIndexAsync(0);
+})();

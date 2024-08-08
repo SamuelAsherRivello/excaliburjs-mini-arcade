@@ -1,9 +1,8 @@
 import * as ex from 'excalibur';
 import { MiniGameUI as MiniGameUI } from '../../../core/engines/excaliburjs/view/ui/MiniGameUI';
 import { BaseView } from '../../../core/engines/excaliburjs/view/BaseView';
-import { LayoutEngine } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 
-export class MiniArcadeView extends BaseView {
+export class MiniGameView extends BaseView {
   // Properties -----------------------------------
   public set score(value: number) {
     const formattedScore = value.toString().padStart(3, '0');

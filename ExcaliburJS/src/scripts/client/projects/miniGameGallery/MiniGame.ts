@@ -1,32 +1,32 @@
 import { Game } from '@client/core/engines/excaliburjs/Game';
 import * as ex from 'excalibur';
-import { MiniArcadeView } from './MiniArcadeView';
-import { MiniArcadeModel } from './MiniArcadeModel';
-import { MiniArcadeController } from './MiniArcadeController';
+import { MiniGameModel } from './concerns/MinGameModel';
+import { MiniGameView } from './concerns/MiniGameView';
+import { MiniGameController } from './concerns/MiniGameController';
 import { LayoutEngine } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 
 /**
  * The main game class with high level logic
  */
-export class MiniArcadeGame extends Game {
+export class MiniGame extends Game {
   // Events ---------------------------------------
 
   // Properties -----------------------------------
-  protected get model(): MiniArcadeModel {
+  protected get model(): MiniGameModel {
     return this._model;
   }
 
-  protected get view(): MiniArcadeView {
+  protected get view(): MiniGameView {
     return this._view;
   }
-  protected get controller(): MiniArcadeController {
+  protected get controller(): MiniGameController {
     return this._controller;
   }
 
   // Fields ---------------------------------------
-  private _view!: MiniArcadeView;
-  private _model!: MiniArcadeModel;
-  private _controller!: MiniArcadeController;
+  private _view!: MiniGameView;
+  private _model!: MiniGameModel;
+  private _controller!: MiniGameController;
 
   // Initialization -------------------------------
   constructor() {
@@ -61,11 +61,11 @@ export class MiniArcadeGame extends Game {
     await super.initializeAsync();
 
     //Model
-    this._model = new MiniArcadeModel();
+    this._model = new MiniGameModel();
     await this._model.initializeAsync();
 
     //View
-    this._view = new MiniArcadeView(this);
+    this._view = new MiniGameView(this);
     await this._view.initializeAsync();
     this.currentScene.add(this._view);
 
@@ -74,7 +74,7 @@ export class MiniArcadeGame extends Game {
     this._model.lives.onValueChanged.addEventListener(this.model_Lives_onValueChanged.bind(this));
 
     //Controller
-    this._controller = new MiniArcadeController();
+    this._controller = new MiniGameController();
     await this._controller.initializeAsync();
 
     //

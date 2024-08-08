@@ -2,7 +2,7 @@ import { BaseModel } from '@client/core/engines/excaliburjs/model/BaseModel';
 import { IInitializableAsync } from '@client/core/interfaces/IInitializeAsync';
 import { ObservableValue } from '@client/core/observables/ObservableValue';
 
-export class MiniArcadeModel extends BaseModel implements IInitializableAsync {
+export class MiniGameModel extends BaseModel implements IInitializableAsync {
   // Properties -----------------------------------
   public get score(): ObservableValue<number> {
     return this._score;

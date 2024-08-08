@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { Asteroid } from './Asteroid';
 import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollection';
-import { MiniArcadeAnimations } from '../../../settings/MiniArcadeAnimations';
+import { MiniGameAnimations } from '../../../systems/MiniGameAnimations';
 import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
@@ -81,7 +81,7 @@ export class Bullet extends ActorAdvanced {
       }
     }, this._lifespan);
 
-    await MiniArcadeAnimations.scaleUpAndFadeUpAsync(this);
+    await MiniGameAnimations.scaleUpAndFadeUpAsync(this);
   }
 
   onPreKill(scene: ex.Scene): void {}
@@ -89,7 +89,7 @@ export class Bullet extends ActorAdvanced {
   // Methods --------------------------------------
   public async takeDamage(engine: ex.Engine) {
     this.body.collisionType = ex.CollisionType.PreventCollision;
-    await MiniArcadeAnimations.scaleDownAndFadeDownAsync(this);
+    await MiniGameAnimations.scaleDownAndFadeDownAsync(this);
     this.kill();
   }
 }
