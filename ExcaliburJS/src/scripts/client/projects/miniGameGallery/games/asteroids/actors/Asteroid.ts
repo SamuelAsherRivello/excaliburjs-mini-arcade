@@ -127,6 +127,7 @@ export class Asteroid extends ActorAdvanced implements IDestroyable {
 
     // Wait
     this.actions.clearActions();
+
     await MiniGameAnimations.scaleDownAndFadeDownAsync(this, { duration: 100 });
 
     // Result

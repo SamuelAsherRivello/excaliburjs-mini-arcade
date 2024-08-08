@@ -3,7 +3,7 @@ import { Bullet, BulletConfigurationDefault } from './Bullet';
 import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollection';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
-import { ScaleAspectRatio, RelativeTo, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
+import { ScaleAspectRatio, RelativeTo, Unit, LayoutEngine } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 import { CameraShake, MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 import { MiniGameBehaviors } from '@client/projects/miniGameGallery/systems/MiniGameBehaviors';
 
@@ -42,8 +42,8 @@ export class AsteroidsPlayer extends ActorAdvanced {
   private readonly MaxRotationSpeed: number = 0.05;
   private readonly RotationAcceleration: number = 0.0005;
   private readonly RotationDeceleration: number = 0.001;
-  private readonly ThrustForce: number = 200;
-  private readonly MaxSpeed: number = 300;
+  private readonly ThrustForce: number = 200 / LayoutEngine.RetroFactor;
+  private readonly MaxSpeed: number = 300 / LayoutEngine.RetroFactor;
   private readonly DragCoefficient: number = 0.01;
   private readonly BulletSpeed: number = 800;
   //

@@ -100,8 +100,8 @@ export class Bullet extends ActorAdvanced implements IDestroyable {
   public async destroyAsync() {
     // Prep
     this._isDestroying = true; //Useful for turning off any movement
-    this.vel = ex.vec(0, 0);
-    this.collider.clear();
+    this.vel.scale(0.1); //slow it dramatically
+    this.collider.clear(); //stop collision
 
     // Wait
     this.actions.clearActions();

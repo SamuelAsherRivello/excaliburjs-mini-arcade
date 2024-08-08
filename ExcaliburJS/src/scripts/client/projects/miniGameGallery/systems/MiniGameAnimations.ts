@@ -102,18 +102,19 @@ export class MiniGameAnimations {
     await MiniGameAnimations.awaitTimeAsync(animationConfiguration.delay!);
 
     // Delta
-    const change1 = new ex.ActionSequence(target, (ctx) => {
+    const actionSequence1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(1, 1), ex.vec(3, 3));
     });
 
-    const change2 = new ex.ActionSequence(target, (ctx) => {
+    const actionSequence2 = new ex.ActionSequence(target, (ctx) => {
       ctx.fade(1, animationConfiguration.duration!);
     });
 
-    const parallel = new ex.ParallelActions([change1, change2]);
+    const parallel = new ex.ParallelActions([actionSequence1, actionSequence2]);
     target.actions.runAction(parallel);
 
-    while (!parallel.isComplete(target)) {
+    //TODO: Works great! But better wait to await a parallel?
+    while (!actionSequence1.isComplete() || !actionSequence2.isComplete()) {
       await MiniGameAnimations.awaitNextFrameAsync();
     }
     return Promise.resolve();
@@ -131,18 +132,19 @@ export class MiniGameAnimations {
     await MiniGameAnimations.awaitTimeAsync(animationConfiguration.delay!);
 
     //change
-    const change1 = new ex.ActionSequence(target, (ctx) => {
+    const actionSequence1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(0, 0), ex.vec(2, 2));
     });
 
-    const change2 = new ex.ActionSequence(target, (ctx) => {
-      ctx.fade(0, animationConfiguration.delay!);
+    const actionSequence2 = new ex.ActionSequence(target, (ctx) => {
+      ctx.fade(0, animationConfiguration.duration!);
     });
 
-    const parallel = new ex.ParallelActions([change1, change2]);
-    await target.actions.runAction(parallel);
+    const parallel = new ex.ParallelActions([actionSequence1, actionSequence2]);
+    const actionContext: ex.ActionContext = target.actions.runAction(parallel);
 
-    while (!parallel.isComplete(target)) {
+    //TODO: Works great! But better wait to await a parallel?
+    while (!actionSequence1.isComplete() || !actionSequence2.isComplete()) {
       await MiniGameAnimations.awaitNextFrameAsync();
     }
     return Promise.resolve();
@@ -150,15 +152,16 @@ export class MiniGameAnimations {
 
   public static async scaleUpAndDownAsync(target: ex.Actor) {
     // Delta
-    const change1 = new ex.ActionSequence(target, (ctx) => {
+    const actionSequence1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(1.2, 1.2), ex.vec(2, 2));
       ctx.scaleTo(ex.vec(1, 1), ex.vec(2, 2));
     });
 
-    const parallel = new ex.ParallelActions([change1]);
+    const parallel = new ex.ParallelActions([actionSequence1]);
     await target.actions.runAction(parallel);
 
-    while (!parallel.isComplete(target)) {
+    //TODO: Works great! But better wait to await a parallel?
+    while (!actionSequence1.isComplete()) {
       await MiniGameAnimations.awaitNextFrameAsync();
     }
     return Promise.resolve();
@@ -166,15 +169,16 @@ export class MiniGameAnimations {
 
   public static async scaleDownAndUpAsync(target: ex.Actor) {
     // Delta
-    const change1 = new ex.ActionSequence(target, (ctx) => {
+    const actionSequence1 = new ex.ActionSequence(target, (ctx) => {
       ctx.scaleTo(ex.vec(0.7, 0.7), ex.vec(4, 4));
       ctx.scaleTo(ex.vec(1, 1), ex.vec(4, 4));
     });
 
-    const parallel = new ex.ParallelActions([change1]);
+    const parallel = new ex.ParallelActions([actionSequence1]);
     await target.actions.runAction(parallel);
 
-    while (!parallel.isComplete(target)) {
+    //TODO: Works great! But better wait to await a parallel?
+    while (!actionSequence1.isComplete()) {
       await MiniGameAnimations.awaitNextFrameAsync();
     }
     return Promise.resolve();

@@ -58,13 +58,11 @@ export class MiniGameGallery implements IInitializableAsync {
     /////////////////////////
     let canvasElementClone: HTMLCanvasElement | null = null;
     if (this._gameCurrent) {
+      console.log('Warning: Disposing an existing game is not working!');
       canvasElementClone = this._gameCurrent.canvas.cloneNode() as HTMLCanvasElement;
       //Dispose of previous game
       this._gameCurrent?.dispose();
     }
-
-    console.log('index: ' + gameIndex);
-    console.log('c: ' + canvasElementClone);
 
     await MiniGameAnimations.awaitTimeAsync(200);
 
