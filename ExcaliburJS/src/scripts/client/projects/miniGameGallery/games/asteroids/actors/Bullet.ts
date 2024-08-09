@@ -6,6 +6,7 @@ import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 import { IDestroyable } from '@client/core/interfaces/IDestroyable';
+import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/MiniGameParticles';
 
 export interface BulletConfiguration extends ActorConfiguration {}
 
@@ -68,6 +69,7 @@ export class Bullet extends ActorAdvanced implements IDestroyable {
       if (evt.other instanceof Asteroid) {
         if (!this._isDestroying) {
           evt.other.health.value -= Asteroid.HealthDelta;
+
           this.destroy();
         }
       }
@@ -102,6 +104,8 @@ export class Bullet extends ActorAdvanced implements IDestroyable {
     this.onDestroyComplete();
   }
   public async onDestroyComplete() {
-    this.kill();
+    if (!this.isKilled) {
+      this.kill();
+    }
   }
 }

@@ -9,6 +9,7 @@ import { IHealth } from '@client/core/interfaces/IHealth';
 import { ObservableValue } from '@client/core/observables/ObservableValue';
 import { config } from 'process';
 import { EngineSingleton } from '@client/core/engines/excaliburjs/singletons/EngineSingleton';
+import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/MiniGameParticles';
 
 export interface AsteroidConfiguration extends ActorConfiguration {
   velocity: ex.Vector;
@@ -137,6 +138,7 @@ export class Asteroid extends ActorAdvanced implements IDestroyable, IHealth {
 
     // Wait
     this.actions.clearActions();
+    MiniGameParticles.particlesAddDustAsync(this, { duration: 100 });
     await MiniGameAnimations.scaleDownAndFadeDownAsync(this, { duration: 100 });
 
     // Result

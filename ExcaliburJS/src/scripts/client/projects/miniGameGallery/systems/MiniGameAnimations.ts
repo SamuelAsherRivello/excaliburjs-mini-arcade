@@ -25,39 +25,6 @@ export class MiniGameAnimations {
   public static callAfterFrame(target: ex.Actor, method: () => void) {
     target.actions.delay(100).callMethod(method);
   }
-  /**
-   *
-   * @param target
-   */
-  static async particlesAddDustAsync(target: ex.Actor, duration: number) {
-    target.actions
-      .callMethod(async () => {
-        const particleEmitter = new ex.ParticleEmitter({});
-        particleEmitter.emitterType = ex.EmitterType.Circle; // Shape of emitter nozzle
-        particleEmitter.radius = 5;
-        particleEmitter.minVel = 100;
-        particleEmitter.maxVel = 200;
-        particleEmitter.minAngle = 0;
-        particleEmitter.maxAngle = Math.PI * 2;
-        particleEmitter.emitRate = 300; // 300 particles/second
-        particleEmitter.opacity = 0.5;
-        particleEmitter.fadeFlag = true; // fade particles overtime
-        particleEmitter.particleLife = 100; // in milliseconds = 1 sec
-        particleEmitter.maxSize = 10; // in pixels
-        particleEmitter.minSize = 1;
-        particleEmitter.color = ex.Color.Rose;
-        particleEmitter.isEmitting = true; // should the emitter be emitting
-        particleEmitter.pos = new ex.Vector(0, 40);
-        particleEmitter.particleLife;
-        target.addChild(particleEmitter);
-
-        await MiniGameAnimations.awaitTimeAsync(duration);
-        particleEmitter.kill();
-      })
-      .delay(1000);
-
-    return Promise.resolve();
-  }
 
   /**
    *

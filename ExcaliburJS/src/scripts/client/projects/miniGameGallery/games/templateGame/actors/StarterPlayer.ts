@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 import { AsteroidsCollisionGroups } from '../../asteroids/settings/AsteroidsCollisionGroups';
 import { starterResourceCollection } from '../settings/StarterResourceCollection';
 import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
+import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/MiniGameParticles';
 
 /**
  * Represents the player-controlled frog in the Frogger game.
@@ -70,7 +71,7 @@ export class StarterPlayer extends ex.Actor {
     }
 
     MiniGameAnimations.scaleDownAndUpAsync(this);
-    MiniGameAnimations.particlesAddDustAsync(this, 100);
+    MiniGameParticles.particlesAddDustAsync(this, { duration: 100 });
   }
 
   // Event Handlers -------------------------------
