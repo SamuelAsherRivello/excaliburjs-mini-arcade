@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
-import { MiniGameUI as MiniGameUI } from '../../../core/engines/excaliburjs/view/ui/MiniGameUI';
-import { BaseView } from '../../../core/engines/excaliburjs/view/BaseView';
+import { MiniGameUI } from '@client/core/engines/excaliburjs/concerns/view/ui/MiniGameUI';
+import { BaseView } from '@client/core/engines/excaliburjs/concerns/view/BaseView';
 
 export class MiniGameView extends BaseView {
   // Properties -----------------------------------

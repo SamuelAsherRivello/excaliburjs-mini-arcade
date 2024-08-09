@@ -1,7 +1,7 @@
 // ResourceCollection.ts
 
+import { IInitializableAsync } from '@client/core/interfaces/IInitializeAsync';
 import { ImageSource, Sound, FontSource, Loader } from 'excalibur';
-import { IInitializableAsync } from '../../interfaces/IInitializeAsync';
 
 export type ImportedAsset = string | { default: string };
 

@@ -1,5 +1,4 @@
 import { FontSource, ImageFiltering, ImageSource, Sound } from 'excalibur';
-import { ResourceCollection } from '@client/core/engines/excaliburjs/ResourceCollection';
 
 //
 import Paddle01 from '@assets/images/itch.io/breakout/Paddle01.png';
@@ -10,6 +9,7 @@ import Tile03 from '@assets/images/itch.io/breakout/Tile03.png';
 import Background02 from '@assets/images/itch.io/asteroids/Background02.png';
 import Hit01 from '@assets/audio/sfx/Hit01.wav';
 import Britanic from '@assets/fonts/Britanic.ttf';
+import { ResourceCollection } from '@client/core/engines/excaliburjs/resources/ResourceCollection';
 
 //
 // Flexible API: Pass string or import as arg #1

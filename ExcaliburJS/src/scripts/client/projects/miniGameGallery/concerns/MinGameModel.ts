@@ -1,4 +1,4 @@
-import { BaseModel } from '@client/core/engines/excaliburjs/model/BaseModel';
+import { BaseModel } from '@client/core/engines/excaliburjs/concerns/model/BaseModel';
 import { IInitializableAsync } from '@client/core/interfaces/IInitializeAsync';
 import { ObservableValue } from '@client/core/observables/ObservableValue';
 

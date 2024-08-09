@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { LayoutConfiguration, LayoutEngine, RelativeTo, ScaleAspectRatio, Unit } from '../../layout/LayoutEngine';
+import { LayoutEngine, Unit, RelativeTo, ScaleAspectRatio } from '../../../layout/LayoutEngine';
 
 export class TextScreenElement extends ex.ScreenElement {
   // Properties -----------------------------------

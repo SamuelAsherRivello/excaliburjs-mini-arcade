@@ -51,5 +51,16 @@ export default defineConfig({
     alias: {
       '@client': path.resolve(__dirname, './src/scripts/client'),
     },
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        './*.{js,ts,mts}', // Exclude files directly in the project root
+        '**/*.d.ts', // Exclude all files ending with "d.ts"
+        'node_modules/**',
+        'dist/**',
+        'coverage/**',
+        'src/assets/**',
+      ],
+    },
   },
 } as UserConfig);

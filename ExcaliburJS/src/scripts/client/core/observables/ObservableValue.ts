@@ -15,10 +15,11 @@ export class ObservableValue<TValue> {
 
     //Dispatch only if truly changed
     if (this._previousValue != this._currentValue) {
-      //Store last
-      this._previousValue = this._currentValue;
       //Dispatch
       this.onValueChanged.invoke(this._previousValue, this._currentValue);
+
+      //Store last
+      this._previousValue = this._currentValue;
     }
   }
 

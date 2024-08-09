@@ -1,4 +1,4 @@
-import { BaseController } from '../../../core/engines/excaliburjs/controller/BaseController';
+import { BaseController } from '../../../core/engines/excaliburjs/concerns/controller/BaseController';
 import { ActionState, MiniGameInput } from '../systems/MiniGameInput';
 
 export class MiniGameController extends BaseController {

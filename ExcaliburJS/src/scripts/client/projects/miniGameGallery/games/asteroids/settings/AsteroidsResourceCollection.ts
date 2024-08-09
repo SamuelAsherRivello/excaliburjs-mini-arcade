@@ -1,5 +1,4 @@
 import { FontSource, ImageFiltering, ImageSource, Sound } from 'excalibur';
-import { ResourceCollection } from '@client/core/engines/excaliburjs/ResourceCollection';
 
 //
 import Asteroid01 from '@assets/images/itch.io/asteroids/Asteroid01.png';
@@ -15,6 +14,7 @@ import Shoot02 from '@assets/audio/sfx/Shoot02.wav';
 import Hit01 from '@assets/audio/sfx/Hit01.wav';
 import Hit02 from '@assets/audio/sfx/Hit02.wav';
 import Britanic from '@assets/fonts/Britanic.ttf';
+import { ResourceCollection } from '@client/core/engines/excaliburjs/resources/ResourceCollection';
 
 //
 const resourceCollection = new ResourceCollection();
