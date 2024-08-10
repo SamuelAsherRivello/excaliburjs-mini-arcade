@@ -22,25 +22,41 @@ This section includes detailed game projects to apply the concepts learned. Each
 
 TBD...
 
-### Lesson 4
+## Game Projects
 
-| #   | Name        | Desktop | Mobile | Keyboard | Tap | Physics | Tilemap | AI  |
-| --- | ----------- | ------- | ------ | -------- | --- | ------- | ------- | --- |
-| 1   | Breakout    | ☑️      | ☑️     | ☑️       | ☑️  | ☑️      | ❌      | ❌  |
-| 2   | Asteroids   | ☑️      | ☑️     | ☑️       | ☑️  | ☑️      | ❌      | ❌  |
-| 3   | Frogger     | ☑️      | ☑️     | ☑️       | ☑️  | ❌      | ❌      | ❌  |
-| 4   | Donkey Kong | ☑️      | ☑️     | ☑️       | ☑️  | ☑️      | ❌      | ❌  |
-| 5   | Pac-Man     | ☑️      | ☑️     | ☑️       | ☑️  | ❌      | ☑️      | ☑️  |
+| #   | Name             | Desktop + Mobile | SpriteSheet | Physics | Tilemap | AI  |
+| --- | ---------------- | ---------------- | ----------- | ------- | ------- | --- |
+| 1   | Breakout         | ☑️               | ❌          | ☑️      | ❌      | ❌  |
+| 2   | Asteroids        | ☑️               | ❌          | ☑️      | ❌      | ❌  |
+| 3   | Frogger          | ☑️               | ❌          | ☑️      | ❌      | ❌  |
+| 4   | Blackjack        | ☑️               | ❌          | ❌      | ❌      | ☑️  |
+| 5   | TBD Word Game    | ☑️               | ❌          | ❌      | ❌      | ❌  |
+| 6   | TBD Tile Game    | ☑️               | ☑️          | ☑️      | ☑️      | ☑️  |
+| 7   | TBD Gravity Game | ☑️               | ☑️          | ☑️      | ☑️      | ☑️  |
 
 ## Game Essentials
 
-| #   | Name        | Description            |
-| --- | ----------- | ---------------------- |
-| 1   | UI          | User Interface         |
-| 2   | Input       | Player controls        |
-| 3   | Audio       | Sound effects & music  |
-| 4   | Graphics    | Visual elements        |
-| 5   | Scripting   | Game logic             |
-| 6   | Animation   | Movement & transitions |
-| 7   | Win/Loss    | End game conditions    |
-| 8   | Restartable | Replayability          |
+| #   | Name      | Description            |
+| --- | --------- | ---------------------- |
+| 1   | UI        | User Interface         |
+| 2   | Input     | Player controls        |
+| 3   | Audio     | Sound effects          |
+| 4   | Graphics  | Visual elements        |
+| 5   | Scripting | Game logic             |
+| 6   | Animation | Movement & transitions |
+| 7   | Win/Loss  | Gameplay               |
+
+## Game Bonus
+
+| #   | Name                   | Description |
+| --- | ---------------------- | ----------- |
+| 1   | Tweening               | Visuals     |
+| 2   | Particles              | Visuals     |
+| 3   | Shaders                | Visuals     |
+| 4   | Fullscreen             | Visuals     |
+| 5   | Restartable            | Gameplay    |
+| 6   | ScripRef Docs          | CI/CD       |
+| 7   | Hot Refresh            | CI/CD       |
+| 8   | Unit Tests             | CI/CD       |
+| 9   | Continuous Integration | CI/CD       |
+| 10  | Continuous Delivery    | CI/CD       |

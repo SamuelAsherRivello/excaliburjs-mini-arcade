@@ -35,8 +35,8 @@ export class MiniGameModel extends BaseModel implements IInitializableAsync {
     //Local
 
     //NOTE: Later, set to non-zero from some game-specific class
-    this._score.value = 0;
-    this._lives.value = 0;
+    this._score.value = -1;
+    this._lives.value = -1;
 
     //NOTE: Force refresh to initial value
     this._score.refreshValueChanged();

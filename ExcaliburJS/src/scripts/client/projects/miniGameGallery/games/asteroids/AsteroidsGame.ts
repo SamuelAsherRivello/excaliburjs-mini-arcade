@@ -1,5 +1,9 @@
 import * as ex from 'excalibur';
-import { Background as Background, BackgroundConfiguration, BackgroundConfigurationDefault } from '@client/core/engines/excaliburjs/actors/Background';
+import {
+  BackgroundActor as BackgroundActor,
+  BackgroundConfiguration,
+  BackgroundConfigurationDefault,
+} from '@client/core/engines/excaliburjs/actors/Background';
 import { AsteroidsPlayer, AsteroidsPlayerConfigurationDefault } from './actors/AsteroidsPlayer';
 import { Asteroid } from './actors/Asteroid';
 import { asteroidsResourceCollection } from './settings/AsteroidsResourceCollection';
@@ -13,7 +17,7 @@ export class AsteroidsGame extends MiniGame {
   // Properties -----------------------------------
 
   // Fields ---------------------------------------
-  private _background!: Background;
+  private _background!: BackgroundActor;
   private _player!: AsteroidsPlayer;
   //
   private _asteroidCount: ObservableValue<number> = new ObservableValue<number>(0);
@@ -46,15 +50,6 @@ export class AsteroidsGame extends MiniGame {
     this.model.score.value = 0;
     this.model.lives.value = 3;
     this.model.gameState.value = GameState.GameInitialized;
-
-    // Populate the UI
-    this.model.score.refreshValueChanged();
-    this.model.lives.refreshValueChanged();
-  }
-
-  onPreUpdate(engine: ex.Engine, delta: number): void {
-    super.onPreUpdate(engine, delta);
-    this.handlePlayerInput(engine, delta);
   }
 
   // Helper Methods -------------------------------
@@ -64,7 +59,7 @@ export class AsteroidsGame extends MiniGame {
       isScrolling: true,
       scrollVelocity: ex.vec(15, 30),
     };
-    this._background = new Background(backgroundConfiguration);
+    this._background = new BackgroundActor(backgroundConfiguration);
     this.currentScene.add(this._background);
   }
 
@@ -98,6 +93,12 @@ export class AsteroidsGame extends MiniGame {
     }
   }
 
+  // Event Handlers -------------------------------
+  public onPreUpdate(engine: ex.Engine, delta: number): void {
+    super.onPreUpdate(engine, delta);
+    this.handlePlayerInput(engine, delta);
+  }
+
   protected override onModelChanged() {
     if (this.model.gameState.value === GameState.GameInitialized) {
       console.log(`GameState: ${GameState[this.model.gameState.value]}`);
@@ -106,13 +107,13 @@ export class AsteroidsGame extends MiniGame {
     }
 
     if (this.model.gameState.value === GameState.GameRunning) {
-      if (this.model.lives.value <= 0) {
+      if (this.model.lives.value == 0) {
         console.log('No Lives');
         this.model.gameState.value = GameState.GameEnded;
         console.log(`GameState: ${GameState[this.model.gameState.value]}`);
       }
 
-      if (this._asteroidCount.value <= 0) {
+      if (this._asteroidCount.value == 0) {
         console.log('No Asteroids');
         this.model.gameState.value = GameState.GameEnded;
         console.log(`GameState: ${GameState[this.model.gameState.value]}`);
@@ -123,8 +124,6 @@ export class AsteroidsGame extends MiniGame {
       //Game over here...
     }
   }
-
-  // Event Handlers -------------------------------
 
   private asteroid_onCreate(asteroid: Asteroid) {
     this._asteroidCount.value++;

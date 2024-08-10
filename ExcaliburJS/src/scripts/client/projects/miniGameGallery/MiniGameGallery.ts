@@ -2,6 +2,7 @@ import { IInitializableAsync } from '../../core/interfaces/IInitializeAsync';
 import { EngineSingleton } from '@client/core/engines/excaliburjs/singletons/EngineSingleton';
 import { MiniGameAnimations } from './systems/MiniGameAnimations';
 import { MiniGame } from './MiniGame';
+import { Game } from '@client/core/engines/excaliburjs/Game';
 /**
  * The main game class with high level logic
  */
@@ -11,6 +12,14 @@ export class MiniGameGallery implements IInitializableAsync {
   // Properties -----------------------------------
   get isInitialized(): boolean {
     return this._isInitialized;
+  }
+
+  get gameCount(): number {
+    return this._games.length;
+  }
+
+  get gameCurrent(): MiniGame {
+    return this._gameCurrent!;
   }
 
   // Fields ---------------------------------------

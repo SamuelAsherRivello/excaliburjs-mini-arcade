@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 import { breakoutResourceCollection } from './settings/BreakoutResourceCollection';
-import { Background } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/Background';
 import { BreakoutPlayer } from './actors/BreakoutPlayer';
 import { TileLevel } from './actors/TileLevel';
 import { MiniGame } from '../../MiniGame';
@@ -33,6 +33,7 @@ export class BreakoutGame extends MiniGame {
     this.initializeBackground();
     this.initializeLevel();
     this.initializePlayer();
+
     // Set Values
     this.model.score.value = 0;
     this.model.lives.value = 3;
@@ -43,18 +44,9 @@ export class BreakoutGame extends MiniGame {
     this.handlePlayerInput(engine, delta);
   }
 
-  protected override onModelChanged() {
-    if (this.model.lives.value <= 0) {
-      this.model.lives.value = 0;
-      console.log('Gameover');
-    }
-  }
-
-  // Event Handlers -------------------------------
-
   // Helper Methods -------------------------------
   private initializeBackground(): void {
-    this._background = new Background({
+    this._background = new BackgroundActor({
       imageSource: breakoutResourceCollection.get<ex.ImageSource>('Background02'),
     });
     this.currentScene.add(this._background);
@@ -103,6 +95,13 @@ export class BreakoutGame extends MiniGame {
     if (this.controller.action.wasPressed) {
       //
       breakoutResourceCollection.get<ex.Sound>('Hit01').play();
+    }
+  }
+
+  // Event Handlers -------------------------------
+  protected override onModelChanged() {
+    if (this.model.lives.value == 0) {
+      console.log('Gameover');
     }
   }
 }

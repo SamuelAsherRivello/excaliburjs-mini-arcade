@@ -2,6 +2,7 @@ import { AsteroidsGame } from './projects/miniGameGallery/games/asteroids/Astero
 import { BreakoutGame } from './projects/miniGameGallery/games/breakout/BreakoutGame';
 import { FroggerGame } from './projects/miniGameGallery/games/frogger/FroggerGame';
 import { StarterGame } from './projects/miniGameGallery/games/templateGame/StarterGame';
+import { TwentyOneGame } from './projects/miniGameGallery/games/twentyOne/TwentyOneGame';
 import { MiniGameGallery } from './projects/miniGameGallery/MiniGameGallery';
 
 /////////////////////////
@@ -12,6 +13,7 @@ miniGameGallery.addGame(AsteroidsGame);
 miniGameGallery.addGame(BreakoutGame);
 miniGameGallery.addGame(FroggerGame);
 miniGameGallery.addGame(StarterGame);
+miniGameGallery.addGame(TwentyOneGame);
 
 /////////////////////////
 (async () => {
@@ -19,5 +21,12 @@ miniGameGallery.addGame(StarterGame);
   await miniGameGallery.initializeAsync();
 
   /////////////////////////
-  await miniGameGallery.showGameAtIndexAsync(0);
+  let gameIndex = Math.round(Math.random() * (miniGameGallery.gameCount - 1));
+  gameIndex = miniGameGallery.gameCount - 1;
+
+  //
+  await miniGameGallery.showGameAtIndexAsync(gameIndex);
+
+  //
+  miniGameGallery.gameCurrent.toggleDebug();
 })();

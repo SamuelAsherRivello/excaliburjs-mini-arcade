@@ -3,11 +3,34 @@ import { AsteroidsCollisionGroups } from '../../asteroids/settings/AsteroidsColl
 import { starterResourceCollection } from '../settings/StarterResourceCollection';
 import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/MiniGameParticles';
+import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
+import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
+
+export interface StarterConfiguration extends ActorConfiguration {}
+
+export const StarterConfigurationDefault: StarterConfiguration = {
+  collisionType: ex.CollisionType.Active,
+  collisionGroup: AsteroidsCollisionGroups.Player,
+  imageSource: starterResourceCollection.get<ex.ImageSource>('KnightStatic01'),
+  layoutConfiguration: {
+    sizeLayoutConfiguration: {
+      width: { value: 30, unit: Unit.Percent },
+      height: { value: 30, unit: Unit.Percent },
+      relativeTo: RelativeTo.Screen,
+      scaleAspectRatio: ScaleAspectRatio.PrioritizeHeight,
+    },
+    positionLayoutConfiguration: {
+      x: { value: 50, unit: Unit.Percent },
+      y: { value: 50, unit: Unit.Percent },
+      relativeTo: RelativeTo.Screen,
+    },
+  },
+};
 
 /**
  * Represents the player-controlled frog in the Frogger game.
  */
-export class StarterPlayer extends ex.Actor {
+export class StarterPlayer extends ActorAdvanced {
   // Properties -----------------------------------
 
   // Fields ---------------------------------------
@@ -18,26 +41,22 @@ export class StarterPlayer extends ex.Actor {
   private _shadowOffset = ex.vec(3, 3);
   private _flipHorizontal = false;
   // Initialization -------------------------------
-  constructor() {
-    super({
-      pos: ex.vec(150, 150),
-      width: 50,
-      height: 50,
-      collisionType: ex.CollisionType.Active,
-      collisionGroup: AsteroidsCollisionGroups.Player,
-    });
+  constructor(configuration: StarterConfiguration = StarterConfigurationDefault) {
+    //
+    configuration = { ...StarterConfigurationDefault, ...configuration };
+    //
+    super(configuration);
   }
 
   // Methods --------------------------------------
-  onInitialize() {
-    const sprite = starterResourceCollection.get<ex.ImageSource>('KnightStatic01').toSprite();
+  public onInitialize() {
+    const sprite = this.configuration.imageSource!.toSprite();
+    sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
+    this.graphics.add(sprite);
 
-    // Double the scale of the sprites
-    sprite.scale = ex.vec(2, 2);
-    this.graphics.use(sprite);
     this.collider.set(
       new ex.CircleCollider({
-        radius: Math.max(sprite.width, sprite.height) / 2,
+        radius: Math.max(sprite.width / 2, sprite.height / 2),
       }),
     );
 

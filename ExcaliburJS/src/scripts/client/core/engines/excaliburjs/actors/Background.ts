@@ -1,7 +1,7 @@
+import * as ex from 'excalibur';
 import { ActorAdvanced, ActorConfiguration } from './ActorAdvanced';
 import { ScaleAspectRatio, RelativeTo, Unit } from '../layout/LayoutEngine';
-import * as ex from 'excalibur';
-import { asteroidsResourceCollection } from '@client/projects/miniGameGallery/games/asteroids/settings/AsteroidsResourceCollection';
+import { sharedResourceCollection } from '@client/projects/miniGameGallery/games/_shared/settings/SharedResourceCollection';
 
 export interface BackgroundConfiguration extends ActorConfiguration {
   isScrolling?: boolean;
@@ -11,7 +11,7 @@ export interface BackgroundConfiguration extends ActorConfiguration {
 export const BackgroundConfigurationDefault: BackgroundConfiguration = {
   isScrolling: false,
   scrollVelocity: ex.vec(0, 0),
-  imageSource: asteroidsResourceCollection.get<ex.ImageSource>('Background03'),
+  imageSource: sharedResourceCollection.get<ex.ImageSource>('BackgroundGeneric01'),
   layoutConfiguration: {
     sizeLayoutConfiguration: {
       width: { value: 100, unit: Unit.Percent },
@@ -27,7 +27,7 @@ export const BackgroundConfigurationDefault: BackgroundConfiguration = {
   },
 };
 
-export class Background extends ActorAdvanced {
+export class BackgroundActor extends ActorAdvanced {
   // Properties -----------------------------------
   public override get configuration(): BackgroundConfiguration {
     return this._configuration as BackgroundConfiguration;

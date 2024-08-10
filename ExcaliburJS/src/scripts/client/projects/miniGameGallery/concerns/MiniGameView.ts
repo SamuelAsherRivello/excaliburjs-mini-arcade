@@ -6,7 +6,7 @@ export class MiniGameView extends BaseView {
   // Properties -----------------------------------
   public set score(value: number) {
     const formattedScore = value.toString().padStart(3, '0');
-    this._ui.scoreText = `Score: ${formattedScore}​`;
+    this._ui.textUpperLeft = `Score: ${formattedScore}​`;
   }
 
   public set lives(value: number) {
@@ -18,7 +18,15 @@ export class MiniGameView extends BaseView {
     const filledHearts = filledHeart.repeat(value);
     const emptyHearts = emptyHeart.repeat(Math.max(0, maxLives - value));
     const formattedLives = filledHearts + emptyHearts;
-    this._ui.livesText = `Lives: ${formattedLives}`;
+    this._ui.textUpperRight = `Lives: ${formattedLives}`;
+  }
+
+  public set buttons(value: string) {
+    this._ui.textLowerLeft = value;
+  }
+
+  public set status(value: string) {
+    this._ui.textCenter = value;
   }
 
   // Fields ---------------------------------------
@@ -30,9 +38,15 @@ export class MiniGameView extends BaseView {
     this._ui = new MiniGameUI(engine);
   }
 
+  public override async initializeAsync(): Promise<any> {
+    super.initializeAsync();
+    //TODO: Set this per-game for unique inputs
+    this.buttons = `⬅️⬆️​​➡️​🟦​, F, R​`;
+    this.status = '';
+  }
+
   onInitialize() {
     this.addChild(this._ui);
-    this._ui.buttonsText = `⬅️⬆️​​➡️​🟦​, F, R​`;
   }
 
   // Methods --------------------------------------

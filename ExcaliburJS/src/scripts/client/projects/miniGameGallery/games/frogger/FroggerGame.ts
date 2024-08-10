@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { FrogPlayer } from './actors/FrogPlayer';
 import { froggerResourceCollection } from './settings/FroggerResourceCollection';
-import { Background } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/Background';
 import { TrafficLevel } from './actors/TrafficLevel';
 import { MiniGame } from '../../MiniGame';
 
@@ -34,27 +34,14 @@ export class FroggerGame extends MiniGame {
     this.initializeBackground();
     this.initializeLevel();
     this.initializePlayer();
+
     // Set Values
     this.model.score.value = 0;
     this.model.lives.value = 3;
   }
 
-  onPreUpdate(engine: ex.Engine, delta: number): void {
-    super.onPreUpdate(engine, delta);
-    this.handlePlayerInput(engine, delta);
-  }
-
-  protected override onModelChanged() {
-    if (this.model.lives.value <= 0) {
-      console.log('Gameover');
-    }
-  }
-
-  // Event Handlers -------------------------------
-
-  // Helper Methods -------------------------------
   private initializeBackground(): void {
-    this._background = new Background({
+    this._background = new BackgroundActor({
       imageSource: froggerResourceCollection.get<ex.ImageSource>('Background01'),
     });
     this.currentScene.add(this._background);
@@ -95,6 +82,18 @@ export class FroggerGame extends MiniGame {
 
     if (this.controller.action.wasPressed) {
       // Action button logic here
+    }
+  }
+
+  // Event Handlers -------------------------------
+  onPreUpdate(engine: ex.Engine, delta: number): void {
+    super.onPreUpdate(engine, delta);
+    this.handlePlayerInput(engine, delta);
+  }
+
+  protected override onModelChanged() {
+    if (this.model.lives.value == 0) {
+      console.log('Gameover');
     }
   }
 }

@@ -11,10 +11,13 @@ export class ObservableValue<TValue> {
   }
   set value(newValue: TValue) {
     //Validate
-    this._currentValue = this.onValueChanging(this._currentValue, newValue);
+    newValue = this.onValueChanging(this._currentValue, newValue);
 
     //Dispatch only if truly changed
-    if (this._previousValue != this._currentValue) {
+    if (this._currentValue !== newValue) {
+      //Update Current
+      this._currentValue = newValue;
+
       //Dispatch
       this.onValueChanged.invoke(this._previousValue, this._currentValue);
 

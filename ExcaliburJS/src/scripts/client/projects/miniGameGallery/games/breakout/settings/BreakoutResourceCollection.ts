@@ -8,12 +8,11 @@ import Tile02 from '@assets/images/itch.io/breakout/Tile02.png';
 import Tile03 from '@assets/images/itch.io/breakout/Tile03.png';
 import Background02 from '@assets/images/itch.io/asteroids/Background02.png';
 import Hit01 from '@assets/audio/sfx/Hit01.wav';
-import Britanic from '@assets/fonts/Britanic.ttf';
-import { ResourceCollection } from '@client/core/engines/excaliburjs/resources/ResourceCollection';
+import { SharedResourceCollection } from '../../_shared/settings/SharedResourceCollection';
 
 //
 // Flexible API: Pass string or import as arg #1
-const rc = new ResourceCollection();
+const rc = new SharedResourceCollection();
 rc.add(Paddle01, new ImageSource(Paddle01));
 rc.add(Ball01, new ImageSource(Ball01));
 rc.add(Tile01, new ImageSource(Tile01));
@@ -22,14 +21,5 @@ rc.add(Tile03, new ImageSource(Tile03));
 rc.add(Background02, new ImageSource(Background02));
 //
 rc.add(Hit01, new Sound(Hit01));
-//
-rc.add(
-  Britanic,
-  new FontSource(Britanic, 'Britanic', {
-    filtering: ImageFiltering.Pixel,
-    size: 18,
-  }),
-);
-
 //
 export const breakoutResourceCollection = rc;

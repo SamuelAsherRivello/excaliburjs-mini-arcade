@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { AsteroidsPlayer } from '../games/asteroids/actors/AsteroidsPlayer';
 
 export enum CameraShake {
   Light,
@@ -55,6 +54,33 @@ export class MiniGameAnimations {
   public static async awaitTimeAsync(durationMs: number) {
     //TODO: I don't think this works or works well.
     return new Promise((resolve) => setTimeout(resolve, durationMs));
+  }
+
+  public static async moveToAsync(target: ex.Actor, toPosition: ex.Vector, animationConfiguration?: AnimationConfiguration) {
+    //Spread
+    animationConfiguration = { ...AnimationConfigurationDefault, ...animationConfiguration };
+
+    // Delay
+    await MiniGameAnimations.awaitTimeAsync(animationConfiguration.delay!);
+
+    // Delta
+    const actionSequence1 = new ex.ActionSequence(target, (ctx) => {
+      ctx.easeTo(toPosition, animationConfiguration.duration!);
+    });
+
+    const actionSequence2 = new ex.ActionSequence(target, (ctx) => {
+      ctx.scaleTo(ex.vec(1.1, 1.1), ex.vec(2, 2));
+      ctx.scaleTo(ex.vec(1, 1), ex.vec(2, 2));
+    });
+
+    const parallel = new ex.ParallelActions([actionSequence1, actionSequence2]);
+    target.actions.runAction(parallel);
+
+    //TODO: Works great! But better wait to await a parallel?
+    while (!actionSequence1.isComplete() || !actionSequence2.isComplete()) {
+      await MiniGameAnimations.awaitNextFrameAsync();
+    }
+    return Promise.resolve();
   }
 
   public static async scaleUpAndFadeUpAsync(target: ex.Actor, animationConfiguration?: AnimationConfiguration) {

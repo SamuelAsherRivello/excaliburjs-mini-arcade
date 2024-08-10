@@ -11,10 +11,15 @@ export class TextScreenElement extends ex.ScreenElement {
   }
   // Fields ---------------------------------------
   private _label: ex.Label;
-  private readonly MarginTop = 40; // Why must these change?
-  private readonly MarginLeft = 40; // Why must these change?
-  private readonly MarginBottom = 20; // Why must these change?
   private _layoutEngine: LayoutEngine;
+
+  override get width(): number {
+    return this._layoutEngine.getCalculatedWidth();
+  }
+
+  override get height(): number {
+    return this._layoutEngine.getCalculatedHeight();
+  }
 
   // Initialization -------------------------------
   constructor(engine: ex.Engine) {
@@ -36,6 +41,7 @@ export class TextScreenElement extends ex.ScreenElement {
           color: ex.Color.Blue,
         },
       }),
+      anchor: ex.vec(0, 0),
     });
 
     label.anchor = ex.vec(0, 0);
@@ -43,16 +49,13 @@ export class TextScreenElement extends ex.ScreenElement {
     super();
 
     const configuration = {
+      //Arbitrary values, but works well!
+      //Make each textfield 50% of the screen width and 4% of the screen height
       sizeLayoutConfiguration: {
-        width: { value: 10, unit: Unit.Percent },
-        height: { value: 10, unit: Unit.Percent },
+        width: { value: 50, unit: Unit.Percent },
+        height: { value: 4, unit: Unit.Percent },
         relativeTo: RelativeTo.Screen,
         scaleAspectRatio: ScaleAspectRatio.PrioritizeWidth,
-      },
-      positionLayoutConfiguration: {
-        x: { value: 50, unit: Unit.Pixel },
-        y: { value: 50, unit: Unit.Pixel },
-        relativeTo: RelativeTo.Screen,
       },
     };
 
@@ -64,40 +67,57 @@ export class TextScreenElement extends ex.ScreenElement {
 
   onInitialize() {
     this.addChild(this._label);
-
-    // this.scale = this._layoutEngine.getCalculatedScale(this);
-    // this.pos = this._layoutEngine.getCalculatedPosition(this);
   }
 
   // Methods --------------------------------------
-  public anchorToUpperLeft(margin: number) {
-    //TODO: why is the "20" needed
+  public anchorToUpperLeft(marginPercent: number) {
+    //
     this._label.font.textAlign = ex.TextAlign.Left;
-    this.pos = ex.vec(this._label.width / 2 + margin, this._label.height + this.MarginTop + margin);
+    //
+    const margin = this.getMarginPercent(marginPercent);
+    //
+    this.pos = ex.vec(margin, this.height + margin);
   }
 
-  public anchorToUpperRight(margin: number) {
-    //TODO: why is the "20" needed
+  public anchorToUpperRight(marginPercent: number) {
+    //
     this._label.font.textAlign = ex.TextAlign.Right;
-    this.pos = ex.vec(this._engine.drawWidth - this._label.width / 2 - margin, -2 + this._label.height + this.MarginTop + margin);
+    //
+    const margin = this.getMarginPercent(marginPercent);
+    //
+    this.pos = ex.vec(this._layoutEngine.screenWidthCurrent() - margin, this.height + margin);
   }
 
-  public anchorToLowerLeft(margin: number) {
-    //TODO: why is the "10" needed
+  public anchorToLowerLeft(marginPercent: number) {
+    //
     this._label.font.textAlign = ex.TextAlign.Left;
-    this.pos = ex.vec(this._label.width / 2 + margin, this._engine.drawHeight - this.MarginBottom - margin);
+    //
+    const margin = this.getMarginPercent(marginPercent);
+    //
+    this.pos = ex.vec(this._label.width / 2 + margin, this._layoutEngine.screenHeightCurrent() - this.height / 2 - margin);
   }
 
-  public anchorToLowerRight(margin: number) {
-    //TODO: why is the "10" needed
+  public anchorToLowerRight(marginPercent: number) {
+    //
     this._label.font.textAlign = ex.TextAlign.Right;
-    this.pos = ex.vec(this._engine.drawWidth - this._label.width / 2 - margin, this._engine.drawHeight - this.MarginBottom - margin);
+    //
+    const margin = this.getMarginPercent(marginPercent);
+    //
+    this.pos = ex.vec(this._layoutEngine.screenWidthCurrent() - this._label.width / 2 - margin, this._layoutEngine.screenHeightCurrent() - margin);
   }
 
-  public anchorToCenter(margin: number) {
-    //TODO: why is the "20" needed
+  public anchorToCenter(marginPercent: number) {
+    //
     this._label.font.textAlign = ex.TextAlign.Center;
-    this.pos = ex.vec(this._engine.drawWidth / 2 + this._label.width / 2, this._engine.drawHeight / 2 - this._label.height / 2);
+    //
+    const margin = this.getMarginPercent(marginPercent);
+    //
+    this.pos = ex.vec(this._layoutEngine.screenWidthCurrent() / 2, this._layoutEngine.screenHeightCurrent() / 2 - this.height);
+  }
+
+  //TODO: I don't love this calculation, but it works for now
+  private getMarginPercent(marginPercent: number): number {
+    return this._layoutEngine.screenWidthCurrent() * marginPercent;
   }
 
   // Event Handlers -------------------------------

@@ -20,6 +20,14 @@ export class ActorAdvanced extends ex.Actor {
     return this._layoutEngine;
   }
 
+  public override get width(): number {
+    return this.layoutEngine.getCalculatedWidth(this._configuration.imageSource);
+  }
+
+  public override get height(): number {
+    return this.layoutEngine.getCalculatedHeight(this._configuration.imageSource);
+  }
+
   // Fields ---------------------------------------
   private _layoutEngine: LayoutEngine;
   protected _configuration: ActorConfiguration;
@@ -55,6 +63,17 @@ export class ActorAdvanced extends ex.Actor {
 
     this._configuration = configuration as ActorConfiguration;
     this._layoutEngine = layoutEngine;
+  }
+
+  public onInitialize(engine: ex.Engine) {
+    if (this.children.length > 0) {
+      console.log(this.constructor.name + ' already has children. 1. ' + 'Allow ActorAdvanced to do it or just dont call super.onInitialize()');
+      return;
+    }
+
+    const sprite = this.configuration.imageSource!.toSprite();
+    sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
+    this.graphics.use(sprite);
   }
 
   // Methods --------------------------------------

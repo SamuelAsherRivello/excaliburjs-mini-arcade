@@ -1,8 +1,9 @@
 import * as ex from 'excalibur';
 import { starterResourceCollection } from './settings/StarterResourceCollection';
-import { Background, BackgroundConfiguration } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor, BackgroundConfiguration } from '@client/core/engines/excaliburjs/actors/Background';
 import { StarterPlayer } from './actors/StarterPlayer';
 import { MiniGame } from '../../MiniGame';
+import { GameState } from '../../concerns/MinGameModel';
 
 export class StarterGame extends MiniGame {
   // Events ---------------------------------------
@@ -11,7 +12,7 @@ export class StarterGame extends MiniGame {
 
   // Fields ---------------------------------------
   private _player!: StarterPlayer;
-  private _background!: Background;
+  private _background!: BackgroundActor;
 
   // Initialization -------------------------------
   constructor() {
@@ -34,36 +35,20 @@ export class StarterGame extends MiniGame {
     // Set Values
     this.model.score.value = 0;
     this.model.lives.value = 3;
+    this.model.gameState.value = GameState.GameInitialized;
   }
 
-  onPreUpdate(engine: ex.Engine, delta: number): void {
-    super.onPreUpdate(engine, delta);
-    this.handlePlayerInput(engine, delta);
-  }
-
-  protected override onModelChanged() {
-    if (this.model.lives.value <= 0) {
-      this.model.lives.value = 0;
-      console.log('Gameover');
-    }
-  }
-
-  // Event Handlers -------------------------------
-
-  // Helper Methods -------------------------------
   private initializeBackground(): void {
     const backgroundConfiguration: BackgroundConfiguration = {
       imageSource: starterResourceCollection.get<ex.ImageSource>('Background01'),
       isScrolling: false,
     };
-    this._background = new Background(backgroundConfiguration);
+    this._background = new BackgroundActor(backgroundConfiguration);
     this.currentScene.add(this._background);
   }
 
   private initializePlayer(): void {
     this._player = new StarterPlayer();
-    this._player.pos.x = this.screen.resolution.width / 2;
-    this._player.pos.y = this.screen.resolution.height / 2;
     this.currentScene.add(this._player);
   }
 
@@ -104,6 +89,18 @@ export class StarterGame extends MiniGame {
       //
       this.model.lives.value -= 1;
       //
+    }
+  }
+
+  // Event Handlers -------------------------------
+  public onPreUpdate(engine: ex.Engine, delta: number): void {
+    super.onPreUpdate(engine, delta);
+    this.handlePlayerInput(engine, delta);
+  }
+
+  protected override onModelChanged() {
+    if (this.model.lives.value == 0) {
+      console.log('Gameover');
     }
   }
 }
