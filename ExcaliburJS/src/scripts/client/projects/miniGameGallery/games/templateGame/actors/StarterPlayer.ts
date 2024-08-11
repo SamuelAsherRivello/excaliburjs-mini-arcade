@@ -5,6 +5,8 @@ import { MiniGameAnimations } from '@client/projects/miniGameGallery/systems/Min
 import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/MiniGameParticles';
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
+import { MiniGameMaterials } from '@client/projects/miniGameGallery/systems/MiniGameMaterials';
+import { OutlineMaterialsConfiguration } from '../../../systems/MiniGameMaterials';
 
 export interface StarterConfiguration extends ActorConfiguration {}
 
@@ -35,10 +37,6 @@ export class StarterPlayer extends ActorAdvanced {
 
   // Fields ---------------------------------------
   public readonly _moveSpeed = 3000;
-  private shadowVisible = true;
-  private _shadowTintCache!: ex.Color;
-  private _shadowTint = new ex.Color(0, 0, 0, 0.2);
-  private _shadowOffset = ex.vec(3, 3);
   private _flipHorizontal = false;
   // Initialization -------------------------------
   constructor(configuration: StarterConfiguration = StarterConfigurationDefault) {
@@ -50,33 +48,22 @@ export class StarterPlayer extends ActorAdvanced {
 
   // Methods --------------------------------------
   public onInitialize() {
+    // Add graphics
     const sprite = this.configuration.imageSource!.toSprite();
     sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
     this.graphics.add(sprite);
 
+    // Add custom Material
+    // NOTE: Only one material can be applied to an actor at a time....
+    this.graphics.material = MiniGameMaterials.getMaterial_DropShadow();
+    //this.graphics.material = MiniGameMaterials.getMaterial_Outline();
+
+    // Add collider
     this.collider.set(
       new ex.CircleCollider({
         radius: Math.max(sprite.width / 2, sprite.height / 2),
       }),
     );
-
-    this.graphics.onPreDraw = (ctx: ex.ExcaliburGraphicsContext) => {
-      if (!this.shadowVisible || !this.graphics) {
-        return;
-      }
-
-      // set the shadow tint/opacity
-      this._shadowTintCache = ctx.tint;
-      ctx.tint = this._shadowTint;
-
-      // loop through all graphics and draw them with the shadow offset
-      for (const g of Object.values(this.graphics.graphics)) {
-        g.draw(ctx, -g.width * this.anchor.x + this._shadowOffset.x, -g.height * this.anchor.y + this._shadowOffset.y);
-      }
-
-      // put the tint back for the rest of the drawing
-      ctx.tint = this._shadowTintCache;
-    };
   }
 
   public async move(engine: ex.Engine, delta: number, movement: ex.Vector) {
