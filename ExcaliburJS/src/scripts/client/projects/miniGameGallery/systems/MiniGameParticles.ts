@@ -14,6 +14,14 @@ const ParticleConfigurationDefault: ParticleConfiguration = {
   directionRadians: 0,
 };
 
+/**
+ * Create more easily here
+ *
+ * https://excaliburjs.com/particle-tester/
+ *
+ *
+ *
+ */
 export class MiniGameParticles {
   public static async particlesAddDustAsync(target: ex.Actor, particleConfiguration?: ParticleConfiguration) {
     //Spread

@@ -51,8 +51,7 @@ You can run these terminal commands during your workflows.
 |---------------------------|------------------------------------------------|---------|-------|--------|----------|
 | `npm install`             | Required: Download and install dependencies    | ❌      | ❌    | ❌     | ❌       |
 | `npm run client-build`    | Required: Build app                            | ✅      | ❌    | ❌     | ❌       |
-| `npm run client-start`    | Required: Run app on localhost                 | ❌      | ✅    | ❌     | ✅       |
-| `npm run tests-start`     | Optional: Run unit tests                       | ❌      | ❌    | ✅     | ❌       |
+| `npm run client-start-watch`    | Required: Run app on localhost                 | ❌      | ✅    | ❌     | ✅       |
 | `npm run tests-start-watch` | Optional: Run unit tests in watch mode         | ❌      | ❌    | ✅     | ✅       |
 
 

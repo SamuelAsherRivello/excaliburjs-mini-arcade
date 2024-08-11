@@ -4,6 +4,7 @@ import { BackgroundActor, BackgroundConfiguration } from '@client/core/engines/e
 import { StarterPlayer } from './actors/StarterPlayer';
 import { MiniGame } from '../../MiniGame';
 import { GameState } from '../../concerns/MinGameModel';
+import { MiniGamePostProcessors } from '../../systems/MiniGamePostProcessors';
 
 export class StarterGame extends MiniGame {
   // Events ---------------------------------------
@@ -36,6 +37,10 @@ export class StarterGame extends MiniGame {
     this.model.score.value = 0;
     this.model.lives.value = 3;
     this.model.gameState.value = GameState.GameInitialized;
+
+    //POST PROCESSING
+    const postProcessor: ex.PostProcessor = MiniGamePostProcessors.getPostProcessor_GrayScale();
+    //this.graphicsContext.addPostProcessor(postProcessor);
   }
 
   private initializeBackground(): void {
