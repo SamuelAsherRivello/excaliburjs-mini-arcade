@@ -27,6 +27,7 @@ export class MiniGame extends Game {
   private _view!: MiniGameView;
   private _model!: MiniGameModel;
   private _controller!: MiniGameController;
+  public static readonly GravityY = 1000;
 
   // Initialization -------------------------------
   constructor() {
@@ -39,9 +40,12 @@ export class MiniGame extends Game {
       width: 900 / LayoutEngine.RetroFactor,
       height: 1600 / LayoutEngine.RetroFactor,
       displayMode: ex.DisplayMode.FitContainer,
+      fixedUpdateFps: 30,
       maxFps: 120,
       physics: {
-        solver: ex.SolverStrategy.Arcade,
+        enabled: true,
+        solver: ex.SolverStrategy.Realistic,
+        gravity: ex.vec(0, MiniGame.GravityY),
       },
       antialiasing: {
         pixelArtSampler: true, // turns on the sub-pixel shader for pixel art

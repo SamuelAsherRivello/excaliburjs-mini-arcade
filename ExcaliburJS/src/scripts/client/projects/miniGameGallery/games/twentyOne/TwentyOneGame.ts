@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { BackgroundActor as BackgroundActor, BackgroundConfiguration } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor as BackgroundActor, BackgroundConfiguration } from '@client/core/engines/excaliburjs/actors/BackgroundActor';
 import { MiniGame } from '../../MiniGame';
 import { GameState } from '../../concerns/MinGameModel';
 import { twentyOneResourceCollection } from './settings/TwentyOneResourceCollection';

@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { EngineSingleton } from '../../../core/engines/excaliburjs/singletons/EngineSingleton';
 
 export enum CameraShake {
   Light,
@@ -48,7 +49,7 @@ export class MiniGameAnimations {
     }
   }
   public static async awaitNextFrameAsync() {
-    return MiniGameAnimations.awaitTimeAsync(1000 / 30); // assume 30fps or higher
+    return await MiniGameAnimations.awaitTimeAsync(999 / EngineSingleton.instance.currentFrameElapsedMs);
   }
 
   public static async awaitTimeAsync(durationMs: number) {

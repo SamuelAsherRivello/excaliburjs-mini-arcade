@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { FrogPlayer } from './actors/FrogPlayer';
 import { froggerResourceCollection } from './settings/FroggerResourceCollection';
-import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/BackgroundActor';
 import { TrafficLevel } from './actors/TrafficLevel';
 import { MiniGame } from '../../MiniGame';
 

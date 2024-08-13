@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 import { breakoutResourceCollection } from './settings/BreakoutResourceCollection';
-import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/Background';
+import { BackgroundActor } from '@client/core/engines/excaliburjs/actors/BackgroundActor';
 import { BreakoutPlayer } from './actors/BreakoutPlayer';
 import { TileLevel } from './actors/TileLevel';
 import { MiniGame } from '../../MiniGame';

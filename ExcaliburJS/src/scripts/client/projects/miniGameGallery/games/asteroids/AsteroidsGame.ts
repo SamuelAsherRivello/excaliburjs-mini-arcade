@@ -3,7 +3,7 @@ import {
   BackgroundActor as BackgroundActor,
   BackgroundConfiguration,
   BackgroundConfigurationDefault,
-} from '@client/core/engines/excaliburjs/actors/Background';
+} from '@client/core/engines/excaliburjs/actors/BackgroundActor';
 import { AsteroidsPlayer, AsteroidsPlayerConfigurationDefault } from './actors/AsteroidsPlayer';
 import { Asteroid } from './actors/Asteroid';
 import { asteroidsResourceCollection } from './settings/AsteroidsResourceCollection';

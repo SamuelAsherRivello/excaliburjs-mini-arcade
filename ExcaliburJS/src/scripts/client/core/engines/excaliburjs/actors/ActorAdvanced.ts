@@ -66,6 +66,9 @@ export class ActorAdvanced extends ex.Actor {
   }
 
   public onInitialize(engine: ex.Engine) {
+    super.onInitialize(engine);
+
+    //
     if (this.children.length > 0) {
       console.log(this.constructor.name + ' already has children. 1. ' + 'Allow ActorAdvanced to do it or just dont call super.onInitialize()');
       return;
@@ -74,6 +77,13 @@ export class ActorAdvanced extends ex.Actor {
     const sprite = this.configuration.imageSource!.toSprite();
     sprite.scale = this.layoutEngine.getCalculatedScale(this.configuration.imageSource);
     this.graphics.use(sprite);
+
+    if (this.configuration.collisionType != ex.CollisionType.PreventCollision) {
+      // Add collider
+      //TODO: Move this to layoutEngine?
+      const box = ex.Shape.Box(sprite.width, sprite.height, this.anchor);
+      this.collider.set(box);
+    }
   }
 
   // Methods --------------------------------------

@@ -6,11 +6,10 @@ import { MiniGameParticles } from '@client/projects/miniGameGallery/systems/Mini
 import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excaliburjs/actors/ActorAdvanced';
 import { RelativeTo, ScaleAspectRatio, Unit } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 import { MiniGameMaterials } from '@client/projects/miniGameGallery/systems/MiniGameMaterials';
-import { OutlineMaterialsConfiguration } from '../../../systems/MiniGameMaterials';
 
-export interface StarterConfiguration extends ActorConfiguration {}
+export interface StarterPlayerConfiguration extends ActorConfiguration {}
 
-export const StarterConfigurationDefault: StarterConfiguration = {
+export const StarterPlayerConfigurationDefault: StarterPlayerConfiguration = {
   collisionType: ex.CollisionType.Active,
   collisionGroup: AsteroidsCollisionGroups.Player,
   imageSource: starterResourceCollection.get<ex.ImageSource>('KnightStatic01'),
@@ -39,9 +38,9 @@ export class StarterPlayer extends ActorAdvanced {
   public readonly _moveSpeed = 3000;
   private _flipHorizontal = false;
   // Initialization -------------------------------
-  constructor(configuration: StarterConfiguration = StarterConfigurationDefault) {
+  constructor(configuration: StarterPlayerConfiguration = StarterPlayerConfigurationDefault) {
     //
-    configuration = { ...StarterConfigurationDefault, ...configuration };
+    configuration = { ...StarterPlayerConfigurationDefault, ...configuration };
     //
     super(configuration);
   }

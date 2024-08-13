@@ -1,13 +1,22 @@
 {
-  "type": "module",
-  "main": "index.ts",
+  "PROJECT CUSTOMIZATION  ----------------------------------------": "",
   "version": "0.0.1",
-  "name": "excalibur-js-project-template",
-  "description": "Excalibur TypeScript template for Vite",
-  "homepage": "https://github.com/SamuelAsherRivello/excaliburjs-project-template",
+  "name": "excalibur-js-mini-arcade",
+  "description": "Excalibur Mini Arcade",
+  "homepage": "https://github.com/SamuelAsherRivello/excaliburjs-mini-arcade",
+  "keywords": [
+    "vite",
+    "game",
+    "html5",
+    "game-dev",
+    "excalibur",
+    "typescript",
+    "excaliburjs",
+    "game-engine"
+  ],
+  "PROJECT BASICS  ----------------------------------------------": "",
   "scripts": {
     "CLIENT  ----------------------------------------------------": "",
-    "client-start": "vite",
     "client-start-watch": "vite --host",
     "client-build": "tsc && vite build && npm run documentation-build",
     "TESTS  -----------------------------------------------------": "",
@@ -15,17 +24,18 @@
     "tests-start-watch": "vitest",
     "tests-start-ui": "vitest --ui",
     "tests-start-coverage": "vitest run --coverage",
-    "GITHUB PAGES  ----------------------------------------------": "",
-    "publish-start": "npm run client-build",
-    "publish-build": "gh-pages -d dist",
     "DOCUMENTATION  ---------------------------------------------": "",
     "documentation-build": "typedoc --options typedoc.json",
+    "DEPLOYMENT  ------------------------------------------------": "",
+    "client-publish": "npm run documentation-build && npm run client-build && gh-pages -d dist",
     "MISC  ------------------------------------------------------": "",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{js,ts,tsx}\""
   },
+  "type": "module",
+  "main": "index.ts",
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
@@ -48,15 +58,5 @@
     "undici": "^6.19.5",
     "vite": "^5.0.12",
     "vitest": "^2.0.5"
-  },
-  "keywords": [
-    "vite",
-    "game",
-    "html5",
-    "game-dev",
-    "excalibur",
-    "typescript",
-    "excaliburjs",
-    "game-engine"
-  ]
+  }
 }

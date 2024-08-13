@@ -11,6 +11,7 @@ export interface BackgroundConfiguration extends ActorConfiguration {
 export const BackgroundConfigurationDefault: BackgroundConfiguration = {
   isScrolling: false,
   scrollVelocity: ex.vec(0, 0),
+  collisionType: ex.CollisionType.PreventCollision,
   imageSource: sharedResourceCollection.get<ex.ImageSource>('BackgroundGeneric01'),
   layoutConfiguration: {
     sizeLayoutConfiguration: {
