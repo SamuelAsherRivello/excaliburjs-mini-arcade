@@ -1,5 +1,6 @@
 import * as ex from 'excalibur';
 import { EngineSingleton } from '../../../core/engines/excaliburjs/singletons/EngineSingleton';
+import { StarterPlayer } from '../games/templateGame/actors/StarterPlayer';
 
 export enum CameraShake {
   Light,
@@ -24,6 +25,10 @@ export class MiniGameAnimations {
 
   public static callAfterFrame(target: ex.Actor, method: () => void) {
     target.actions.delay(100).callMethod(method);
+  }
+
+  static clearActions(target: ex.Actor) {
+    target.actions.clearActions();
   }
 
   /**

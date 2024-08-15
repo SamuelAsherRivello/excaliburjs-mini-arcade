@@ -10,7 +10,7 @@ import { MiniGameMaterials } from '@client/projects/miniGameGallery/systems/Mini
 export interface StarterPlayerConfiguration extends ActorConfiguration {}
 
 export const StarterPlayerConfigurationDefault: StarterPlayerConfiguration = {
-  collisionType: ex.CollisionType.Active,
+  collisionType: ex.CollisionType.Passive,
   collisionGroup: AsteroidsCollisionGroups.Player,
   imageSource: starterResourceCollection.get<ex.ImageSource>('KnightStatic01'),
   layoutConfiguration: {
@@ -35,7 +35,7 @@ export class StarterPlayer extends ActorAdvanced {
   // Properties -----------------------------------
 
   // Fields ---------------------------------------
-  public readonly _moveSpeed = 3000;
+  public readonly _moveSpeed = 1000;
   private _flipHorizontal = false;
   // Initialization -------------------------------
   constructor(configuration: StarterPlayerConfiguration = StarterPlayerConfigurationDefault) {
@@ -75,6 +75,7 @@ export class StarterPlayer extends ActorAdvanced {
       this.graphics.flipHorizontal = this._flipHorizontal;
     }
 
+    MiniGameAnimations.clearActions(this);
     MiniGameAnimations.scaleDownAndUpAsync(this);
     MiniGameParticles.particlesAddDustAsync(this, { duration: 100 });
   }

@@ -39,12 +39,12 @@ export class AsteroidsPlayer extends ActorAdvanced {
   // Properties -----------------------------------
 
   // Fields ---------------------------------------
-  private readonly MaxRotationSpeed: number = 0.05;
-  private readonly RotationAcceleration: number = 0.0005;
-  private readonly RotationDeceleration: number = 0.001;
+  private readonly MaxRotationSpeed: number = 0.2;
+  private readonly RotationAcceleration: number = 0.01;
+  private readonly AngularDrag: number = 0.01;
   private readonly ThrustForce: number = 200 / LayoutEngine.RetroFactor;
   private readonly MaxSpeed: number = 300 / LayoutEngine.RetroFactor;
-  private readonly DragCoefficient: number = 0.01;
+  private readonly LinearDrag: number = 0.01;
   private readonly BulletSpeed: number = 800;
   //
   private _currentRotationSpeed: number = 0;
@@ -56,6 +56,7 @@ export class AsteroidsPlayer extends ActorAdvanced {
   constructor(configuration: AsteroidsPlayerConfiguration = AsteroidsPlayerConfigurationDefault) {
     //
     configuration = { ...AsteroidsPlayerConfigurationDefault, ...configuration };
+    configuration.collisionType = ex.CollisionType.Passive;
     super(configuration);
     //
   }
@@ -86,9 +87,9 @@ export class AsteroidsPlayer extends ActorAdvanced {
     } else {
       this._rotationHoldTime = 0;
       if (this._currentRotationSpeed > 0) {
-        this._currentRotationSpeed = Math.max(0, this._currentRotationSpeed - this.RotationDeceleration * delta);
+        this._currentRotationSpeed = Math.max(0, this._currentRotationSpeed - this.AngularDrag * delta);
       } else if (this._currentRotationSpeed < 0) {
-        this._currentRotationSpeed = Math.min(0, this._currentRotationSpeed + this.RotationDeceleration * delta);
+        this._currentRotationSpeed = Math.min(0, this._currentRotationSpeed + this.AngularDrag * delta);
       }
     }
 
@@ -131,7 +132,7 @@ export class AsteroidsPlayer extends ActorAdvanced {
   }
 
   private applyDrag(delta: number): void {
-    const dragForce = this.vel.negate().scale(this.DragCoefficient * this.vel.size);
+    const dragForce = this.vel.negate().scale(this.LinearDrag * this.vel.size);
     this.vel = this.vel.add(dragForce.scale(delta / 1000));
   }
 

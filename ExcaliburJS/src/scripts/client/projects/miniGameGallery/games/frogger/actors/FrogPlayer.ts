@@ -18,7 +18,7 @@ export class FrogPlayer extends ex.Actor {
       pos: ex.vec(150, 150),
       width: 50,
       height: 50,
-      collisionType: ex.CollisionType.Active,
+      collisionType: ex.CollisionType.Passive,
       collisionGroup: AsteroidsCollisionGroups.Player,
     });
   }

@@ -13,7 +13,7 @@ export class TrafficItem extends ex.Actor {
       height: config.height,
       pos: config.pos,
       color: new ex.Color(100, 20, 20, 1),
-      collisionType: ex.CollisionType.Active,
+      collisionType: ex.CollisionType.Passive,
     });
     this.direction = config.direction;
     this._imageSource = config.imageSource;

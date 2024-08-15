@@ -68,6 +68,18 @@ export class ResourceCollection implements IInitializableAsync {
       this.resources[name] = resource;
     }
     this.loader.addResource(this.resources[name]);
+
+    // Register the asset for Vite
+    this.registerAssetForBundler(resource.path);
+  }
+
+  private registerAssetForBundler(resourcePath: string): void {
+    const assets = import.meta.glob('/src/assets/**/*', { eager: true });
+    if (assets[resourcePath]) {
+      //console.log(`Asset ${resourcePath} is included in the build.`);
+    } else {
+      console.warn(`Asset ${resourcePath} is not found.`);
+    }
   }
 
   has(name: string): boolean {

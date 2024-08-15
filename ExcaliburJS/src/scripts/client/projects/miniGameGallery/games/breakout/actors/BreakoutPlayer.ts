@@ -21,7 +21,7 @@ export class BreakoutPlayer extends ex.Actor {
   // Initialization -------------------------------
   constructor() {
     super({
-      collisionType: ex.CollisionType.Active,
+      collisionType: ex.CollisionType.Passive,
       collisionGroup: AsteroidsCollisionGroups.Player,
     });
   }
@@ -68,6 +68,7 @@ export class BreakoutPlayer extends ex.Actor {
       this.graphics.flipHorizontal = this._flipHorizontal;
     }
 
+    MiniGameAnimations.clearActions(this);
     await MiniGameAnimations.scaleDownAndUpAsync(this);
     await MiniGameAnimations.awaitTimeAsync(200);
   }

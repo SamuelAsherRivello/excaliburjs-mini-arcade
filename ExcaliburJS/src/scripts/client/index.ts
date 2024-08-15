@@ -11,12 +11,12 @@ import { DonkeyKongGame } from './projects/miniGameGallery/games/donkeykong/Donk
 const miniGameGallery: MiniGameGallery = new MiniGameGallery();
 
 /////////////////////////
-miniGameGallery.addGame(StarterGame);
 miniGameGallery.addGame(AsteroidsGame);
 miniGameGallery.addGame(BreakoutGame);
 miniGameGallery.addGame(FroggerGame);
 miniGameGallery.addGame(TwentyOneGame);
 miniGameGallery.addGame(DonkeyKongGame);
+miniGameGallery.addGame(StarterGame);
 
 /////////////////////////
 (async () => {
@@ -24,8 +24,14 @@ miniGameGallery.addGame(DonkeyKongGame);
   await miniGameGallery.initializeAsync();
 
   /////////////////////////
+
+  //RANDOM
   let gameIndex = Math.round(Math.random() * (miniGameGallery.gameCount - 1));
+
+  //FIRST
   gameIndex = 0;
+
+  //LAST
   gameIndex = miniGameGallery.gameCount - 1;
 
   //
