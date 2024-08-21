@@ -24,9 +24,9 @@ width = "600"
 
 ### Play Project
 
-1. Browse to game [https://SamuelAsherRivello.github.io/Excaliburjs-mini-arcade](https://samuelasherrivello.github.io/excaliburjs-mini-arcade/index.html) (Broken)
+1. Browse to game [https://SamuelAsherRivello.github.io/Excaliburjs-mini-arcade](https://samuelasherrivello.github.io/excaliburjs-mini-arcade/index.html) ( _Temporarily Broken_ )
 
-1. Browse to docs [https://SamuelAsherRivello.github.io/Excaliburjs-mini-arcade/documentation](https://samuelasherrivello.github.io/excaliburjs-mini-arcade/documentation/index.html) (Broken)
+1. Browse to docs [https://SamuelAsherRivello.github.io/Excaliburjs-mini-arcade/documentation](https://samuelasherrivello.github.io/excaliburjs-mini-arcade/documentation/index.html)
 
 1. Enjoy!
 
