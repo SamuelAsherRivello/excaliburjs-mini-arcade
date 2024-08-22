@@ -67,8 +67,9 @@ export class AsteroidsGame extends MiniGame {
     this._player = new AsteroidsPlayer(AsteroidsPlayerConfigurationDefault);
     this.currentScene.add(this._player);
 
-    this._player.on('collisionend', () => {
-      this.model.lives.value--;
+    this._player.on('collisionstart', () => {
+      if (!this._player.isInvincibleRightNow)
+        this.model.lives.value--;
     });
   }
 

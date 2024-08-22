@@ -45,6 +45,10 @@ export class AsteroidsPlayer extends ActorAdvanced implements IDestroyable {
     return this._isDestroying;
   }
 
+  get isInvincibleRightNow(): boolean {
+    return this._isInvincibleRightNow;
+  }
+
   // Fields ---------------------------------------
   private readonly MaxRotationSpeed: number = 0.2;
   private readonly RotationAcceleration: number = 0.01;
