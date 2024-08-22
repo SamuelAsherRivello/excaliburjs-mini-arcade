@@ -39,7 +39,7 @@ width = "600"
 4. Build the project:
    - Run `npm run client-build` to build the project.
 5. Run the project:
-   - Run `npm run client-start` to launch a server to localhost. This serves the development build and hot-reloads on changes within the **src**.
+   - Run `npm run client-start-watch` to launch a server to localhost. This serves the development build and hot-reloads on changes within the **src**.
 6. Play the game at [localhost:3000](http://localhost:3000)
 7. Open the `ExcaliburJS` folder in [Visual Studio Code](https://code.visualstudio.com/) or your favorite editor
 8. Do your game development
