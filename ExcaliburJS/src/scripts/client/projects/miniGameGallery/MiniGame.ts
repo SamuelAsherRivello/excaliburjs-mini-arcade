@@ -104,17 +104,17 @@ export class MiniGame extends Game {
   }
 
   // Event Handlers -------------------------------
-  private model_Score_onValueChanged(previousValue: number, currentValue: number) {
+  protected model_Score_onValueChanged(previousValue: number, currentValue: number) {
     this._view.score = currentValue;
     this.onModelChanged();
   }
 
-  private model_Lives_onValueChanged(previousValue: number, currentValue: number): void {
+  protected model_Lives_onValueChanged(previousValue: number, currentValue: number): void {
     this._view.lives = currentValue;
     this.onModelChanged();
   }
 
-  private model_GameState_onValueChanged(previousValue: GameState, currentValue: GameState): void {
+  protected model_GameState_onValueChanged(previousValue: GameState, currentValue: GameState): void {
     this.onModelChanged();
   }
 }

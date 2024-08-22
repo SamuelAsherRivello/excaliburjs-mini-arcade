@@ -107,11 +107,11 @@ export class AsteroidsGame extends MiniGame {
   protected override onModelChanged() {
     if (this.model.gameState.value === GameState.GameInitialized) {
       console.log(`GameState: ${GameState[this.model.gameState.value]}`);
-      this.model.gameState.value = GameState.GameRunning;
+      this.model.gameState.value = GameState.GameStarted;
       console.log(`GameState: ${GameState[this.model.gameState.value]}`);
     }
 
-    if (this.model.gameState.value === GameState.GameRunning) {
+    if (this.model.gameState.value === GameState.GameStarted) {
       if (this.model.lives.value == 0) {
         console.log('No Lives');
         this.model.gameState.value = GameState.GameEnded;

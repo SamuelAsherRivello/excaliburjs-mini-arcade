@@ -4,8 +4,11 @@ import { ObservableValue } from '@client/core/observables/ObservableValue';
 
 export enum GameState {
   None,
+  GameInitializing,
   GameInitialized,
-  GameRunning,
+  GameStarting,
+  GameStarted,
+  GameEnding,
   GameEnded,
 }
 export class MiniGameModel extends BaseModel implements IInitializableAsync {
