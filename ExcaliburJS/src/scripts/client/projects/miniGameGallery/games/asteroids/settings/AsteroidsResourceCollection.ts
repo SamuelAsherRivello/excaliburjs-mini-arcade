@@ -12,6 +12,7 @@ import Shoot01 from '@assets/audio/sfx/Shoot01.wav';
 import Shoot02 from '@assets/audio/sfx/Shoot02.wav';
 import Hit01 from '@assets/audio/sfx/Hit01.wav';
 import Hit02 from '@assets/audio/sfx/Hit02.wav';
+import FireHit02 from '@assets/audio/sfx/Fire_Hit_02.wav';
 
 import { SharedResourceCollection } from '../../_shared/settings/SharedResourceCollection';
 
@@ -32,5 +33,6 @@ rc.add(Shoot01, new Sound(Shoot01));
 rc.add(Shoot02, new Sound(Shoot02));
 rc.add(Hit01, new Sound(Hit01));
 rc.add(Hit02, new Sound(Hit02));
+rc.add(FireHit02, new Sound(FireHit02));
 //
 export const asteroidsResourceCollection = rc;

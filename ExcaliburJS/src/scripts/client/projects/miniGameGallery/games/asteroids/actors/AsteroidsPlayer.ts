@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { Asteroid } from './Asteroid';
 import { Bullet, BulletConfigurationDefault } from './Bullet';
 import { AsteroidsCollisionGroups } from '../settings/AsteroidsCollisionGroups';
 import { asteroidsResourceCollection } from '../settings/AsteroidsResourceCollection';
@@ -6,8 +7,11 @@ import { ActorAdvanced, ActorConfiguration } from '@client/core/engines/excalibu
 import { ScaleAspectRatio, RelativeTo, Unit, LayoutEngine } from '@client/core/engines/excaliburjs/layout/LayoutEngine';
 import { CameraShake, MiniGameAnimations } from '@client/projects/miniGameGallery/systems/MiniGameAnimations';
 import { MiniGameBehaviors } from '@client/projects/miniGameGallery/systems/MiniGameBehaviors';
+import { IDestroyable } from '@client/core/interfaces/IDestroyable';
+import { Console } from 'console';
+import { EngineSingleton } from '@client/core/engines/excaliburjs/singletons/EngineSingleton';
 
-export interface AsteroidsPlayerConfiguration extends ActorConfiguration {}
+export interface AsteroidsPlayerConfiguration extends ActorConfiguration { }
 
 export const AsteroidsPlayerConfigurationDefault: AsteroidsPlayerConfiguration = {
   imageSource: asteroidsResourceCollection.get<ex.ImageSource>('Ship01'),
@@ -31,12 +35,15 @@ export const AsteroidsPlayerConfigurationDefault: AsteroidsPlayerConfiguration =
 /**
  * Represents the player-controlled ship in the Asteroids game.
  */
-export class AsteroidsPlayer extends ActorAdvanced {
+export class AsteroidsPlayer extends ActorAdvanced implements IDestroyable {
   // Events ---------------------------------------
   public override get configuration(): AsteroidsPlayerConfiguration {
     return this._configuration as AsteroidsPlayerConfiguration;
   }
   // Properties -----------------------------------
+  get isDestroying(): boolean {
+    return this._isDestroying;
+  }
 
   // Fields ---------------------------------------
   private readonly MaxRotationSpeed: number = 0.2;
@@ -46,11 +53,14 @@ export class AsteroidsPlayer extends ActorAdvanced {
   private readonly MaxSpeed: number = 300 / LayoutEngine.RetroFactor;
   private readonly LinearDrag: number = 0.01;
   private readonly BulletSpeed: number = 800;
+  private readonly InvincibilityCooldownMilliseconds: number = 3000;
   //
   private _currentRotationSpeed: number = 0;
   private _rotationHoldTime: number = 0;
   private _canShoot: boolean = true;
   private _shootCooldown: number = 250;
+  private _isDestroying: boolean = false;
+  private _isInvincibleRightNow: boolean = false;
 
   // Initialization -------------------------------
   constructor(configuration: AsteroidsPlayerConfiguration = AsteroidsPlayerConfigurationDefault) {
@@ -59,6 +69,13 @@ export class AsteroidsPlayer extends ActorAdvanced {
     configuration.collisionType = ex.CollisionType.Passive;
     super(configuration);
     //
+  }
+
+  destroy() {
+    throw new Error('Method not implemented.');
+  }
+  onDestroyComplete() {
+    throw new Error('Method not implemented.');
   }
 
   // Methods --------------------------------------
@@ -72,6 +89,14 @@ export class AsteroidsPlayer extends ActorAdvanced {
         radius: Math.max(sprite.width / 2, sprite.height / 2),
       }),
     );
+
+    this.on('collisionstart', (evt) => {
+      if (evt.other instanceof Asteroid) {
+        if (!this._isDestroying) {
+          this.handleCollisionWithAsteroid(evt.other);
+        }
+      }
+    });
   }
 
   public onPreUpdate(engine: ex.Engine, delta: number): void {
@@ -138,6 +163,27 @@ export class AsteroidsPlayer extends ActorAdvanced {
 
   private setPositionWrapAroundScreen(engine: ex.Engine): void {
     MiniGameBehaviors.setPositionWrapAroundScreen(this, engine, true);
+  }
+
+  private handleCollisionWithAsteroid(asteroid: Asteroid) {
+    if (this._isInvincibleRightNow) {
+      return;
+    }
+
+    asteroid.health.value -= Asteroid.HealthDelta;
+    asteroidsResourceCollection.get<ex.Sound>('Fire_Hit_02').play();
+
+    this._isInvincibleRightNow = true;
+    const invincibilityTimer = new ex.Timer({
+      fcn: () => {
+        this._isInvincibleRightNow = false;
+      },
+      repeats: false,
+      interval: this.InvincibilityCooldownMilliseconds,
+    })
+
+    EngineSingleton.instance.currentScene.add(invincibilityTimer);
+    invincibilityTimer.start();
   }
 
   private updateShootCooldown(delta: number): void {

@@ -66,6 +66,10 @@ export class AsteroidsGame extends MiniGame {
   private initializePlayer(): void {
     this._player = new AsteroidsPlayer(AsteroidsPlayerConfigurationDefault);
     this.currentScene.add(this._player);
+
+    this._player.on('collisionend', () => {
+      this.model.lives.value--;
+    });
   }
 
   private initializeAsteroids() {

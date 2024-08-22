@@ -8,7 +8,7 @@ const asteroidGroup = ex.CollisionGroupManager.create('asteroid');
 
 // Define collision rules
 const playerCanCollideWith = ex.CollisionGroup.collidesWith([
-  //asteroidGroup, // player collides with asteroids
+  asteroidGroup, // player collides with asteroids
 ]);
 
 const bulletCanCollideWith = ex.CollisionGroup.collidesWith([
