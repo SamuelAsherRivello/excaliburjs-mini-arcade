@@ -17,7 +17,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version-file: 'ExcaliburJS/.nvmrc'
     - name: Cache node modules
       uses: actions/cache@v3
       env:
@@ -32,9 +32,9 @@ jobs:
     - name: Install dependencies
       run: |
         cd ExcaliburJS
-        npm install
+        npm ci
     - name: Build and Deploy
       run: |
         cd ExcaliburJS
-        npm run build
+        npm run client-build
         # Add your deployment steps here, e.g., copying files to a server or deploying to a hosting service

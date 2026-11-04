@@ -1,9 +1,9 @@
 import { FontSource, ImageFiltering, ImageSource, Sound } from 'excalibur';
 
 //
-import Hero01 from '@assets/images/itch.io/donkeykong/Hero01.png';
-import Platform01 from '@assets/images/itch.io/donkeykong/Platform01.png';
-import Background01 from '@assets/images/itch.io/donkeykong/Background01.png';
+import Hero01 from '@assets/images/itch.io/donkeyKong/Hero01.png';
+import Platform01 from '@assets/images/itch.io/donkeyKong/Platform01.png';
+import Background01 from '@assets/images/itch.io/donkeyKong/Background01.png';
 import Hit01 from '@assets/audio/sfx/Hit01.wav';
 import { SharedResourceCollection } from '../../_shared/settings/SharedResourceCollection';
 

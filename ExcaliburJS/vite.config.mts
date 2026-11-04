@@ -31,6 +31,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     chunkSizeWarningLimit: 1000, // in kBs
     rollupOptions: {
       output: {
@@ -53,8 +54,8 @@ export default defineConfig({
     },
     coverage: {
       reporter: ['text', 'json', 'html'],
+      include: ['src/scripts/client/**/*.ts'],
       exclude: [
-        './*.{js,ts,mts}', // Exclude files directly in the project root
         '**/*.d.ts', // Exclude all files ending with "d.ts"
         'node_modules/**',
         'dist/**',
